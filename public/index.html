@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agenda de Hinos</title>
+<link rel="stylesheet" href="home.css">
+<!-- Ícone para iOS -->
+<link rel="apple-touch-icon" href="img/pql.png">
+
+<!-- Manifest para Android e outros navegadores -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6a1b9a">
+</head>
+<body>
+<section class="central">
+
+    <!-- Link para o formulário -->
+    <a class="Pagina001" href="Formulario.html">Página 2</a>
+
+    <!-- Calendário -->
+    <div class="calendar">
+        <header>
+            <button id="prev">&#9664;</button>
+            <h2 id="monthYear"></h2>
+            <button id="next">&#9654;</button>
+        </header>
+        <table>
+            <thead>
+                <tr>
+                    <th>Dom</th>
+                    <th>Seg</th>
+                    <th>Ter</th>
+                    <th>Qua</th>
+                    <th>Qui</th>
+                    <th>Sex</th>
+                    <th>Sáb</th>
+                </tr>
+            </thead>
+            <tbody id="calendarBody"></tbody>
+        </table>
+    </div> 
+
+    <!-- Tabela de hinos -->
+    <div> 
+
+        
+    <!-- Cards de hinos -->
+    <div class="cards_container" id="cardsHinos"></div>
+    
+    <button class="Limpar_tela" id="limparTabela">Limpar Tabela</button>
+
+
+</section>
+
+<script>
+// ---------------- CARDS DE HINOS ----------------
+const btnLimpar = document.getElementById("limparTabela");
+
+// Função para carregar hinos da API
+async function carregarHinos() {
+    try {
+        const res = await fetch('/api/hino');
+        const hinos = await res.json();
+        const container = document.getElementById("cardsHinos");
+        container.innerHTML = "";
+
+        hinos.forEach(hino => {
+            // Formatar data
+            let dataFormatada = hino.data;
+            if (dataFormatada.includes("-")) {
+                const [ano, mes, dia] = hino.data.split("-");
+                dataFormatada = `${dia}/${mes}/${ano}`;
+            }
+
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            // Classe específica por grupo
+            const grupoClass = `grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`;
+            card.classList.add(grupoClass);
+
+            card.innerHTML = `
+                <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
+                <p class="Card_data"><strong>Data do Culto:</strong> ${dataFormatada}</p>
+                <p class="Card_tipo"><strong>Tipo do Culto:</strong> ${hino.tipo || 'Culto de Louvor'}</p>
+                <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
+                <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || 'C Maior'}</p>
+                <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
+                <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
+            `;
+
+            container.appendChild(card);
+        });
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// Carrega os cards ao iniciar
+carregarHinos();
+
+// Limpar cards
+document.getElementById("limparTabela").addEventListener("click", async () => {
+    try {
+        await fetch('/api/hino', { method: 'DELETE' });
+        carregarHinos();
+        alert("Cards de hinos limpos com sucesso!");
+    } catch (err) {
+        console.error(err);
+        alert("Erro ao limpar cards!");
+    }
+});
+
+
+
+// Chama ao iniciar
+carregarHinos();
+
+// Limpar cards via API
+btnLimpar.addEventListener("click", async () => {
+    try {
+        await fetch('/api/hino', { method: 'DELETE' });
+        carregarHinos();
+        alert("Cards de hinos limpos com sucesso!");
+    } catch (err) {
+        console.error(err);
+        alert("Erro ao limpar cards!");
+    }
+});
+
+// ---------------- CALENDÁRIO ----------------
+const monthYear = document.getElementById("monthYear");
+const calendarBody = document.getElementById("calendarBody");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+let currentDate = new Date();
+
+function renderCalendar(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const months = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+    monthYear.textContent = `${months[month]} ${year}`;
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const lastDate = new Date(year, month + 1, 0).getDate();
+
+    calendarBody.innerHTML = "";
+    let row = document.createElement("tr");
+
+    for(let i = 0; i < firstDay; i++) row.appendChild(document.createElement("td"));
+
+    for(let day = 1; day <= lastDate; day++){
+        const cell = document.createElement("td");
+        cell.textContent = day;
+
+        const today = new Date();
+        if(day === today.getDate() && month === today.getMonth() && year === today.getFullYear()){
+            cell.classList.add("today");
+        }
+
+        row.appendChild(cell);
+
+        if((firstDay + day) % 7 === 0){
+            calendarBody.appendChild(row);
+            row = document.createElement("tr");
+        }
+    }
+
+    if(row.children.length > 0) calendarBody.appendChild(row);
+}
+
+prevBtn.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar(currentDate);
+});
+
+nextBtn.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar(currentDate);
+});
+
+renderCalendar(currentDate);
+
+// ---------------- FORMULÁRIO ----------------
+const form = document.getElementById("hinoForm");
+if(form){
+    form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const grupo = document.getElementById("grupo").value;
+        const dataCulto = document.getElementById("dataCulto").value;
+        const hino = document.getElementById("hino").value;
+        const link = document.getElementById("link").value;
+        const tipo = document.getElementById("tipo")?.value || 'Culto de Louvor';
+        const tom = document.getElementById("tom")?.value || 'C Maior';
+        const atentem = document.getElementById("atentem")?.value || '';
+
+        try {
+            const res = await fetch('/api/hino', {   
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ grupo, data: dataCulto, nome: hino, link, tipo, tom, atentem })
+            });
+
+            if (res.ok) {
+                alert("✅ Hino enviado com sucesso!");
+                this.reset();
+                carregarHinos(); // atualiza cards após envio
+            } else {
+                alert("❌ Erro ao enviar hino!");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("❌ Erro ao enviar hino!");
+        }
+    });
+}
+</script>
+
+
+</body>
+</html>
+

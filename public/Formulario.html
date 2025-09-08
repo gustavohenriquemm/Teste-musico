@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Hinos</title>
+  <link rel="stylesheet" href="home2.css">
+  <!-- Ícone para iOS -->
+  <link rel="apple-touch-icon" href="img/pql.png">
+
+  <!-- Manifest para Android e outros navegadores -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6a1b9a">
+</head>
+<body>
+<section class="central">
+  <div class="form-container">
+    <h2>Cadastro de Hinos 🎶</h2>
+
+    <!-- Link para a página inicial -->
+    <a class="Pagina001" href="index.html">Página 2</a>
+
+    <form id="hinoForm" class="form-container_02">
+      
+      <label for="grupo" class="form-label">Qual o grupo?</label>
+      <select id="grupo" name="grupo" class="form-select" required>
+        <option value="">Selecione...</option>
+        <option value="irmas">Irmãs</option>
+        <option value="louvor">Grupo de Louvor</option>
+        <option value="mocidade">Mocidade</option>
+        <option value="jovens">Adolescentes</option>
+        <option value="varoes">Varões</option>
+      </select>
+
+      <label for="dataCulto" class="form-label">Data do culto:</label>
+      <input type="date" id="dataCulto" name="dataCulto" class="form-input" required>
+
+      <label for="hino" class="form-label">Nome do hino:</label>
+      <input type="text" id="hino" name="hino" class="form-input" placeholder="Digite o nome do hino..." required>
+
+      <label for="link" class="form-label">Link do hino (YouTube):</label>
+      <input type="url" id="link" name="link" class="form-input" placeholder="https://youtube.com/..." required>
+
+      <label for="tom" class="form-label">Tom do hino:</label>
+      <input type="text" id="tom" name="tom" class="form-input" placeholder="Ex: C Maior, G, D#" required>
+
+      <label for="atentem" class="form-label">Observações / Atentem-se:</label>
+      <textarea id="atentem" name="atentem" class="form-textarea" placeholder="Digite observações importantes..."></textarea>
+
+      <button type="submit" class="form-button">Enviar</button>
+    </form>
+
+  </div>
+</section>
+
+<script>
+document.getElementById("hinoForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const grupo = document.getElementById("grupo").value;
+    const dataCulto = document.getElementById("dataCulto").value;
+    const hino = document.getElementById("hino").value;
+    const link = document.getElementById("link").value;
+    const tom = document.getElementById("tom").value;
+    const atentem = document.getElementById("atentem").value;
+
+    try {
+        const res = await fetch('/api/hino', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                grupo,
+                data: dataCulto,
+                nome: hino,
+                link,
+                tom,
+                atentem
+            })
+        });
+
+        if (res.ok) {
+            alert("✅ Hino enviado com sucesso!");
+            this.reset();
+        } else {
+            alert("❌ Erro ao enviar hino!");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("❌ Erro ao enviar hino!");
+    }
+});
+</script>
+</body>
+</html>
