@@ -1,5 +1,9 @@
-/* RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ================== RESET ================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     font-family: Arial, sans-serif;
@@ -8,24 +12,23 @@ body {
     overflow-x: hidden;
 }
 
-/* CENTRAL */
+/* ================== CENTRAL ================== */
 .central {
     width: 90%;
     max-width: 1200px;
     margin: 3rem auto;
     display: flex;
     flex-direction: column;
-   
 }
 
 .Pagina001 {
-  display: none;
+    display: none;
 }
 
-/* CARROSSEL DE CARDS */
+/* ================== CARROSSEL ================== */
 .carousel-container {
     position: relative;
-    padding-top: 15rem;
+    padding-top: 5rem;
 }
 
 .cards_container {
@@ -37,129 +40,122 @@ body {
     scrollbar-width: none;
 }
 
-.cards_container::-webkit-scrollbar { display: none; }
+.cards_container::-webkit-scrollbar {
+    display: none;
+}
 
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  z-index: 1;
+/* ================== CARD ================== */
+.card {
+    position: relative;
+    flex: 0 0 250px; /* largura fixa do card */
+    min-height: 300px; /* altura mínima */
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* texto fica na parte inferior */
+    padding: 15px;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Sombra e efeito hover */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
 
 /* Conteúdo do card */
-.card h3,
-.card p,
-.card a {
-  position: relative;
-  z-index: 2;
-  margin: 5px 10px;
-  color: #fff;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-}
-
 .card h3 {
-  font-size: 18px;
-  font-weight: bold;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
 .card p {
-  font-size: 14px;
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 10px;
 }
 
-.card a {
-  display: inline-block;
-  background: #673ab7;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background 0.3s;
-  margin: 10px;
-}
-
-.card a:hover {
-  background: #4527a0;
-}
-
-/* Botão de deletar dentro do card */
-.card .delete-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 3;
-  background: red;
-  border: none;
-  border-radius: 50%;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 6px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-  transition: background 0.3s;
-}
-
-.card .delete-btn:hover {
-  background: darkred;
-}
-.card:hover { transform: translateY(-5px); }
-
-
-/* Mocidade */
-.grupo_mocidade {
-  background: url("/public/img/IMG\ mocidade.png") no-repeat center/cover;
-  border: 2px solid #2196f3;
-}
-
-/* Adolescentes */
-.grupo_adolescentes {
-  background: url("/public/img/IMG_adolescentes.png") no-repeat center/cover;
-  border: 2px solid #9c27b0;
-}
-
-/* Irmãs */
-.grupo_irmãs, 
-.grupo_irmas {  /* <- pega tanto 'irmãs' como 'irmas' */
-  background: url("/public/img/IMG_irmas.png") no-repeat center/cover;
-  border: 2px solid #e91e63;
-}
-
-/* Varões */
-.grupo_varões, 
-.grupo_varoes { /* <- pega tanto 'varões' como 'varoẽs' */
-  background: url("img/varoes.png") no-repeat center/cover;
-  border: 2px solid #4caf50;
-}
-
-/* Grupo de Louvor */
-.grupo_grupo_de_louvor {
-  background: url("img/louvor.png") no-repeat center/cover;
-  border: 2px solid #ff9800;
-}
-
-
+/* Links dentro do card */
+.card a,
 .Card_link {
     display: inline-block;
-    margin-top: 10px;
+    margin-top: auto;
     padding: 8px 12px;
     background: #4f59af;
     color: white;
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
-    width: 5.5rem;
     text-align: center;
+    transition: background 0.3s;
 }
 
-.Card_link:hover { background: #3528ac; }
+.card a:hover,
+.Card_link:hover {
+    background: #3528ac;
+}
 
-/* BOTÕES DO CARROSSEL */
+/* Botão de deletar dentro do card */
+.card .delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    background: red;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 6px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    transition: background 0.3s;
+}
+
+.card .delete-btn:hover {
+    background: darkred;
+}
+
+/* ================== GRUPOS ================== */
+.grupo_mocidade {
+    background: url("/public/img/IMG_mocidade.png") no-repeat center/cover;
+    border: 2px solid #2196f3;
+}
+
+.grupo_adolescentes {
+    background: url("/public/img/IMG_adolescentes.png") no-repeat center/cover;
+    border: 2px solid #9c27b0;
+}
+
+.grupo_irmãs,
+.grupo_irmas {
+    background: url("/public/img/IMG_irmas.png") no-repeat center/cover;
+    border: 2px solid #e91e63;
+}
+
+.grupo_varões,
+.grupo_varoes {
+    background: url("img/varoes.png") no-repeat center/cover;
+    border: 2px solid #4caf50;
+}
+
+.grupo_grupo_de_louvor {
+    background: url("img/louvor.png") no-repeat center/cover;
+    border: 2px solid #ff9800;
+}
+
+/* ================== BOTÕES DO CARROSSEL ================== */
 .carousel-btn {
     position: absolute;
     top: 50%;
@@ -174,10 +170,15 @@ body {
     z-index: 10;
 }
 
-.carousel-btn.left { left: 0; }
-.carousel-btn.right { right: 0; }
+.carousel-btn.left {
+    left: 0;
+}
 
-/* CALENDÁRIO */
+.carousel-btn.right {
+    right: 0;
+}
+
+/* ================== CALENDÁRIO ================== */
 .calendar {
     width: 100%;
     max-width: 450px;
@@ -186,6 +187,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     color: white;
+    padding-bottom: 15px;
 }
 
 .calendar header {
@@ -196,7 +198,9 @@ body {
     padding: 15px;
 }
 
-.calendar header h2 { font-size: 1.3em; }
+.calendar header h2 {
+    font-size: 1.3em;
+}
 
 .calendar header button {
     background: none;
@@ -206,23 +210,40 @@ body {
     cursor: pointer;
 }
 
-.calendar table { width: 100%; border-collapse: collapse; }
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-.calendar th, .calendar td {
+.calendar th,
+.calendar td {
     text-align: center;
     padding: 10px;
 }
 
-.calendar th { background: rgba(42,25,194,0.5); }
+.calendar th {
+    background: rgba(42,25,194,0.5);
+}
 
-.calendar td { cursor: pointer; }
+.calendar td {
+    cursor: pointer;
+}
 
-.calendar td:hover { background: rgba(209,231,221,0.5); }
+.calendar td:hover {
+    background: rgba(209,231,221,0.5);
+}
 
-.today { background: rgba(26,9,255,0.67); border-radius: 50%; }
+.today {
+    background: rgba(26,9,255,0.67);
+    border-radius: 50%;
+}
 
-/* BOTÃO LIMPAR */
-.container-botao { display: flex; justify-content: center; }
+/* ================== BOTÃO LIMPAR ================== */
+.container-botao {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 
 #limparTabela {
     background: linear-gradient(135deg, #6a5acd, #483d8b);
@@ -237,5 +258,12 @@ body {
     transition: all 0.3s ease;
 }
 
-#limparTabela:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
-#limparTabela:active { transform: translateY(1px); box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
+#limparTabela:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+#limparTabela:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
