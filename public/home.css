@@ -162,6 +162,12 @@ html, body {
 }
 
 /* ----------- BOTÃO LIMPAR ----------- */
+
+.container-botao {
+  display: flex;
+  justify-content: center; /* centraliza horizontalmente */
+}
+
 #limparTabela {
   background: linear-gradient(135deg, #6a5acd, #483d8b);
   color: white;
@@ -174,7 +180,7 @@ html, body {
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   transition: all 0.3s ease;
   display: block;
-  margin-left: 5.5rem;
+  
 }
 
 #limparTabela:hover {
@@ -246,45 +252,8 @@ html, body {
 }
 
 
-/* Container de cards */
-.cards_container {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 10px;
-}
 
-.cards_container::-webkit-scrollbar {
-    display: none; /* Oculta barra de rolagem */
-}
 
-/* Card individual */
-/* Carrossel */
-.cards_container {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 10px;
-}
-
-.cards_container::-webkit-scrollbar {
-    display: none;
-}
-
-/* Card base */
-.card {
-    flex: 0 0 300px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
-    color: white;
-}
 .card:hover {
     transform: translateY(-5px);
 }
