@@ -1,212 +1,33 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background: url("img/2.png") center/cover no-repeat;
+    overflow-x: hidden;
 }
 
-html, body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  background-image: url("img/2.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  overflow-x: hidden;
+/* CENTRAL */
+.central {
+    width: 90%;
+    max-width: 1200px;
+    margin: 3rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
 }
 
 .Pagina001 {
   display: none;
 }
 
-.central {
-  width: 85%;
-  max-width: 1200px;
-  margin: 3rem auto 2rem auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10rem;
-}
-
-/* ----------- CARD ----------- */
-.hino_card {
-  background: rgba(42,25,194,0.28);
-  padding: 20px 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.hino_card h2 {
-  margin-bottom: 10px;
-  color: white;
-  text-align: center;
-  font-size: 1.4em;
-}
-
-.hino_card p {
-  margin: 5px 0;
-  color: white;
-  font-size: 1.2rem;
-}
-
-.hino_card a {
-  color: #007bff;
-  text-decoration: none;
-}
-.hino_card a:hover {
-  text-decoration: underline;
-}
-
-/* ----------- TABELA ----------- */
-.hino_table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-  background: rgba(42,25,194,0.5);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  font-size: 0.7rem;
-  table-layout: fixed; /* força colunas a respeitarem espaço */
-}
-
-.titulo_tabela {
-  font-size: 0.7rem;
-}
-
-.hino_table th, .hino_table td {
-  padding: 12px;
-  text-align: center;
-  color: white;
-  border-bottom: 1px solid rgba(255,255,255,0.3);
-
-  /* evita quebra de layout */
-  word-wrap: break-word;
-  word-break: break-word;
-  white-space: normal;
-  overflow-wrap: break-word;
-}
-
-/* cabeçalho */
-.hino_table th {
-  background: rgba(42,25,194,0.5);
-}
-
-/* largura específica da coluna Nome do Hino */
-.hino_table th:nth-child(3),
-.hino_table td:nth-child(3) {
-  width: 40%;
-}
-
-/* ----------- CALENDÁRIO ----------- */
-.calendar {
-  width: 100%;
-  max-width: 450px;
-  background: rgba(42,25,194,0.28);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  overflow: hidden;
-  color: white;
-  margin: 0 auto 30px auto;
-}
-
-.calendar header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(42,25,194,0.5);
-  color: #fff;
-  padding: 15px;
-}
-
-.calendar header h2 {
-  margin: 0;
-  font-size: 1.3em;
-}
-
-.calendar header button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.2em;
-  cursor: pointer;
-}
-
-.calendar table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.calendar th, .calendar td {
-  text-align: center;
-  padding: 10px;
-  font-size: 0.9em;
-}
-
-.calendar th {
-  background: rgba(42,25,194,0.5);
-}
-
-.calendar td {
-  cursor: pointer;
-}
-.calendar td:hover {
-  background: rgba(209,231,221,0.5);
-}
-
-.today {
-  background: rgba(26,9,255,0.67) !important;
-  border-radius: 50%;
-}
-
-/* ----------- BOTÃO LIMPAR ----------- */
-
-.container-botao {
-  display: flex;
-  justify-content: center; /* centraliza horizontalmente */
-}
-
-#limparTabela {
-  background: linear-gradient(135deg, #6a5acd, #483d8b);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-  display: block;
-  
-}
-
-#limparTabela:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-}
-
-#limparTabela:active {
-  transform: translateY(1px);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-}
-
-
-
-/* Carrossel */
-/* Container principal do carrossel */
+/* CARROSSEL DE CARDS */
 .carousel-container {
     position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    overflow: hidden;
-    margin: 20px auto;
+    padding-top: 15rem;
 }
 
-/* Container dos cards */
 .cards_container {
     display: flex;
     gap: 15px;
@@ -216,50 +37,61 @@ html, body {
     scrollbar-width: none;
 }
 
-/* Remove scroll bar no Chrome/Safari */
-.cards_container::-webkit-scrollbar {
-    display: none;
-}
+.cards_container::-webkit-scrollbar { display: none; }
 
-/* Cards */
 .card {
-    flex: 0 0 250px; /* largura fixa e não encolhe */
-    height: 350px; /* define altura fixa para todos ficarem iguais */
+    min-width: 250px;
+    max-width: 250px;
+    height: 350px;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* conteúdo vai para base do card */
-    background: #fff;
-    border-radius: 10px;
+    justify-content: flex-end;
     padding: 15px;
+    border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     position: relative;
+    color: #000;
     background-size: cover;
     background-position: center;
-    color: #000;
+    transition: transform 0.3s ease;
 }
 
-/* Botões do carrossel */
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #6a1b9a;
-    color: white;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 50%;
-    z-index: 10;
-}
-.carousel-btn.left {
-    left: 0;
-}
-.carousel-btn.right {
-    right: 0;
+.card:hover { transform: translateY(-5px); }
+
+
+/* Mocidade */
+.grupo_mocidade {
+  background: url("/public/img/IMG\ mocidade.png") no-repeat center/cover;
+  border: 2px solid #2196f3;
 }
 
-/* Lixeira */
+/* Adolescentes */
+.grupo_adolescentes {
+  background: url("/public/img/IMG_adolescentes.png") no-repeat center/cover;
+  border: 2px solid #9c27b0;
+}
+
+/* Irmãs */
+.grupo_irmãs, 
+.grupo_irmas {  /* <- pega tanto 'irmãs' como 'irmas' */
+  background: url("/public/img/IMG_irmas.png") no-repeat center/cover;
+  border: 2px solid #e91e63;
+}
+
+/* Varões */
+.grupo_varões, 
+.grupo_varoes { /* <- pega tanto 'varões' como 'varoẽs' */
+  background: url("img/varoes.png") no-repeat center/cover;
+  border: 2px solid #4caf50;
+}
+
+/* Grupo de Louvor */
+.grupo_grupo_de_louvor {
+  background: url("img/louvor.png") no-repeat center/cover;
+  border: 2px solid #ff9800;
+}
+
 .delete-btn {
     position: absolute;
     top: 8px;
@@ -268,111 +100,12 @@ html, body {
     color: white;
     border: none;
     border-radius: 50%;
-    font-size: 16px;
     cursor: pointer;
     padding: 5px 8px;
+    font-size: 16px;
 }
 
-.cards_container {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 10px;
-    scrollbar-width: none; /* Firefox */
-}
-.cards_container::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
-}
-
-.card {
-    min-width: 250px;
-    max-width: 250px;
-    flex: 0 0 auto;
-    background: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-
-
-
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-/* Mocidade */
-.grupo_mocidade {
-    background-image: url('/public/img/IMG\ mocidade.png');
-    background-size: 90%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(124, 134, 218, 0.651);
-}
-
-/* Irmãs */
-.grupo_irmas {
-    background-image: url('img/IMG_irmas.png');
-    background-size: 80%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(238, 192, 215, 0.7);
-    color: black;
-}
-
-/* Varões */
-.grupo_varoes {
-    background-image: url('img/IMG_varoes.png');
-    background-size: 80%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 128, 128, 0.7);
-}
-
-/* Adolescentes */
-.grupo_adolescentes {
-    background-image: url('img/IMG_adolescentes.png');
-    background-size: 80%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: black;
-}
-
-/* Grupo de Louvor */
-.grupo_grupo_de_louvor {
-    background-image: url('img/IMG_grupo_louvor.png');
-    background-size: 80%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(75, 0, 130, 0.7);
-}
-
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-/* Estilizando os elementos internos do card */
-.Card_grupo {
-    margin-bottom: 10px;
-    color: #000000;
-    font-size: 1.2rem;
-    padding-left: 3REM;
-}
-
-.Card_data,
-.Card_tipo,
-.Card_hino,
-.Card_tom,
-.Card_atentem {
-    margin: 5px 0;
-    color: #000000;
-    font-size: 1rem;
-    font-weight: 10800;
-}
+.delete-btn:hover { background: darkred; }
 
 .Card_link {
     display: inline-block;
@@ -383,32 +116,89 @@ html, body {
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
-    transition: background 0.2s ease;
     width: 5.5rem;
+    text-align: center;
 }
 
-.Card_link:hover {
-    background: #3528ac;
-}
+.Card_link:hover { background: #3528ac; }
 
-
-.delete-btn {
+/* BOTÕES DO CARROSSEL */
+.carousel-btn {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    background: red;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #0f0852;
     color: white;
     border: none;
-    border-radius: 50%;
-    font-size: 16px;
+    font-size: 24px;
     cursor: pointer;
-    padding: 5px 8px;
-    transition: 0.3s;
-}
-.delete-btn:hover {
-    background: darkred;
-}
-.card {
-    position: relative; /* importante para posicionar a lixeira dentro */
+    padding: 10px;
+    border-radius: 20%;
+    z-index: 10;
 }
 
+.carousel-btn.left { left: 0; }
+.carousel-btn.right { right: 0; }
+
+/* CALENDÁRIO */
+.calendar {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    background: rgba(42,25,194,0.28);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    color: white;
+}
+
+.calendar header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(42,25,194,0.5);
+    padding: 15px;
+}
+
+.calendar header h2 { font-size: 1.3em; }
+
+.calendar header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.calendar table { width: 100%; border-collapse: collapse; }
+
+.calendar th, .calendar td {
+    text-align: center;
+    padding: 10px;
+}
+
+.calendar th { background: rgba(42,25,194,0.5); }
+
+.calendar td { cursor: pointer; }
+
+.calendar td:hover { background: rgba(209,231,221,0.5); }
+
+.today { background: rgba(26,9,255,0.67); border-radius: 50%; }
+
+/* BOTÃO LIMPAR */
+.container-botao { display: flex; justify-content: center; }
+
+#limparTabela {
+    background: linear-gradient(135deg, #6a5acd, #483d8b);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+#limparTabela:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
+#limparTabela:active { transform: translateY(1px); box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
