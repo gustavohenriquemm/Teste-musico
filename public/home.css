@@ -27,7 +27,7 @@ html, body {
   margin: 3rem auto 2rem auto;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 10rem;
 }
 
 /* ----------- CARD ----------- */
@@ -196,6 +196,7 @@ html, body {
 
 
 /* Carrossel */
+/* Container principal do carrossel */
 .carousel-container {
     position: relative;
     display: flex;
@@ -203,6 +204,73 @@ html, body {
     width: 100%;
     overflow: hidden;
     margin: 20px auto;
+}
+
+/* Container dos cards */
+.cards_container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+    scrollbar-width: none;
+}
+
+/* Remove scroll bar no Chrome/Safari */
+.cards_container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Cards */
+.card {
+    flex: 0 0 250px; /* largura fixa e não encolhe */
+    height: 350px; /* define altura fixa para todos ficarem iguais */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* conteúdo vai para base do card */
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    color: #000;
+}
+
+/* Botões do carrossel */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #6a1b9a;
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    z-index: 10;
+}
+.carousel-btn.left {
+    left: 0;
+}
+.carousel-btn.right {
+    right: 0;
+}
+
+/* Lixeira */
+.delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 8px;
 }
 
 .cards_container {
@@ -227,29 +295,6 @@ html, body {
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #6a1b9a;
-    color: white;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 50%;
-    z-index: 10;
-    transition: background 0.3s;
-}
-.carousel-btn:hover {
-    background: #4a136d;
-}
-.carousel-btn.left {
-    left: 5px;
-}
-.carousel-btn.right {
-    right: 5px;
-}
 
 
 
