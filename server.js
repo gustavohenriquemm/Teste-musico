@@ -10,7 +10,8 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Caminho do arquivo de hinos
-const hinosFilePath = path.join(process.cwd(), 'hinos.json');
+const hinosFilePath = path.join(process.cwd(), 'hinos_teste.json');
+
 
 // API de hinos - GET
 app.get('/api/hino', (req, res) => {
@@ -53,7 +54,6 @@ app.get('*', (req, res) => {
 });
 
 // 🔹 Ping periódico para manter o servidor acordado
-const serverURL = 'https://adbrasparqueluiza.onrender.com/api/hino';
 
 setInterval(async () => {
     try {
@@ -65,5 +65,5 @@ setInterval(async () => {
 }, 10*60*1000); // a cada 10 minutos
 
 // Porta do Render ou local
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
