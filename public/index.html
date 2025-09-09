@@ -46,8 +46,16 @@
     <div> 
 
         
-    <!-- Cards de hinos -->
-    <div class="cards_container" id="cardsHinos"></div>
+   
+    <<!-- Container de cards com setas -->
+            <div class="carousel-container">
+                <button class="carousel-btn left" id="btnPrev">&#9664;</button>
+                
+                <div class="cards_container" id="cardsHinos"></div>
+                
+                <button class="carousel-btn right" id="btnNext">&#9654;</button>
+            </div>
+
     
     <button class="Limpar_tela" id="limparTabela">Limpar Tabela</button>
 
@@ -82,6 +90,7 @@ async function carregarHinos() {
             card.classList.add(grupoClass);
 
             card.innerHTML = `
+                <button class="delete-btn" onclick="deletarHino(${hinos.indexOf(hino)})">🗑</button>
                 <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
                 <p class="Card_data"><strong>Data do Culto:</strong> ${dataFormatada}</p>
                 <p class="Card_tipo"><strong>Tipo do Culto:</strong> ${hino.tipo || 'Culto de Louvor'}</p>
@@ -90,6 +99,7 @@ async function carregarHinos() {
                 <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
                 <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
             `;
+
 
             container.appendChild(card);
         });
@@ -130,6 +140,46 @@ btnLimpar.addEventListener("click", async () => {
         alert("Erro ao limpar cards!");
     }
 });
+
+// API de hinos - DELETE individual
+app.delete('/api/hino/:index', (req, res) => {
+    try {
+        const { index } = req.params;
+        const dataFile = fs.readFileSync(hinosFilePath, 'utf-8');
+        let hinos = JSON.parse(dataFile);
+
+        if (index < 0 || index >= hinos.length) {
+            return res.status(404).json({ message: "Hino não encontrado." });
+        }
+
+        hinos.splice(index, 1); // remove só o escolhido
+        fs.writeFileSync(hinosFilePath, JSON.stringify(hinos, null, 2));
+
+        res.json({ message: "Hino removido com sucesso!" });
+    } catch (err) {
+        res.status(500).json({ message: "Erro ao remover hino." });
+    }
+});
+
+// Função para deletar hino individual
+async function deletarHino(index) {
+    if (!confirm("Deseja realmente excluir este hino?")) return;
+
+    try {
+        const res = await fetch(`/api/hino/${index}`, { method: 'DELETE' });
+        if (res.ok) {
+            alert("✅ Hino removido!");
+            carregarHinos(); // recarrega os cards
+        } else {
+            alert("❌ Erro ao remover hino!");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("❌ Erro na conexão ao remover hino!");
+    }
+}
+
+
 
 // ---------------- CALENDÁRIO ----------------
 const monthYear = document.getElementById("monthYear");
@@ -218,6 +268,20 @@ if(form){
         }
     });
 }
+
+
+// ----------- CONTROLES DO CARROSSEL -----------
+const cardsContainer = document.getElementById("cardsHinos");
+const btnPrev = document.getElementById("btnPrev");
+const btnNext = document.getElementById("btnNext");
+
+btnPrev.addEventListener("click", () => {
+    cardsContainer.scrollBy({ left: -300, behavior: "smooth" });
+});
+btnNext.addEventListener("click", () => {
+    cardsContainer.scrollBy({ left: 300, behavior: "smooth" });
+});
+
 </script>
 
 
