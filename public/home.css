@@ -15,7 +15,7 @@ body {
     margin: 3rem auto;
     display: flex;
     flex-direction: column;
-    gap: 5rem;
+   
 }
 
 .Pagina001 {
@@ -39,24 +39,75 @@ body {
 
 .cards_container::-webkit-scrollbar { display: none; }
 
-.card {
-    min-width: 250px;
-    max-width: 250px;
-    height: 350px;
-    flex: 0 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    position: relative;
-    color: #000;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.3s ease;
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 1;
 }
 
+/* Conteúdo do card */
+.card h3,
+.card p,
+.card a {
+  position: relative;
+  z-index: 2;
+  margin: 5px 10px;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 14px;
+}
+
+.card a {
+  display: inline-block;
+  background: #673ab7;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+  margin: 10px;
+}
+
+.card a:hover {
+  background: #4527a0;
+}
+
+/* Botão de deletar dentro do card */
+.card .delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  background: red;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  transition: background 0.3s;
+}
+
+.card .delete-btn:hover {
+  background: darkred;
+}
 .card:hover { transform: translateY(-5px); }
 
 
@@ -92,20 +143,6 @@ body {
   border: 2px solid #ff9800;
 }
 
-.delete-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 5px 8px;
-    font-size: 16px;
-}
-
-.delete-btn:hover { background: darkred; }
 
 .Card_link {
     display: inline-block;
