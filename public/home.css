@@ -29,6 +29,7 @@ body {
 .carousel-container {
     position: relative;
     padding-top: 5rem;
+    margin: 0 auto;
 }
 
 .cards_container {
@@ -129,7 +130,7 @@ body {
 
 /* ================== GRUPOS ================== */
 .grupo_mocidade {
-    background: url("/public/img/IMG_mocidade.png") no-repeat center/cover;
+    background: url("/public/img/IMG_mocidade.png") ;
     border: 2px solid #2196f3;
 }
 
