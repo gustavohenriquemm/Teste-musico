@@ -25,8 +25,10 @@ app.get('/api/hino', (req, res) => {
 });
 
 // API de hinos - POST
+// ... (imports e configuração anteriores permanecem iguais)
 app.post('/api/hino', (req, res) => {
-    const { grupo, data, nome, link } = req.body;
+    // agora extraímos tom e atentem também
+    const { grupo, data, nome, link, tom, atentem } = req.body;
     let hinos = [];
 
     try {
@@ -34,12 +36,27 @@ app.post('/api/hino', (req, res) => {
         hinos = JSON.parse(dataFile);
     } catch {}
 
-    // Adiciona o novo sem apagar os anteriores
-    hinos.push({ grupo, data, nome, link });
+    // validação simples (opcional)
+    if (!grupo || !data || !nome) {
+        return res.status(400).json({ message: 'Preencha grupo, data e nome do hino.' });
+    }
+
+    const novoHino = {
+        grupo,
+        data,
+        nome,
+        link: link || '',
+        tom: tom || '',
+        atentem: atentem || ''
+    };
+
+    hinos.push(novoHino);
 
     fs.writeFileSync(hinosFilePath, JSON.stringify(hinos, null, 2));
-    res.status(201).json({ message: `Hino do grupo ${grupo} salvo.` });
+    console.log('Hino salvo:', novoHino); // ajuda no debug
+    res.status(201).json({ message: `Hino do grupo ${grupo} salvo.`, hino: novoHino });
 });
+
 
 
 // API de hinos - DELETE (opcional)

@@ -241,7 +241,7 @@ html, body {
 
 /* Mocidade */
 .grupo_mocidade {
-    background-image: url('img/IMG_mocidade.png');
+    background-image: url('/public/img/IMG\ mocidade.png');
     background-size: 90%;
     background-position: center;
     background-repeat: no-repeat;
