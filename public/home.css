@@ -28,20 +28,20 @@ body {
 /* ================== CARROSSEL ================== */
 .carousel-container {
     position: relative;
-    padding-top: 1rem;
-    margin: 0 auto;
-    width: 80%; /* ou a largura que desejar */
+    width: 100%;
+    max-width: 400px; /* largura máxima do card */
+    margin: 2rem auto;
+    overflow: hidden; /* esconde os outros cards */
+    border-radius: 12px;
 }
 
 
 .cards_container {
     display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 10px;
-    scrollbar-width: none;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
 }
+
 
 .cards_container::-webkit-scrollbar {
     display: none;
@@ -50,7 +50,8 @@ body {
 /* ================== CARD ================== */
 .card {
     position: relative;
-    flex: 0 0 250px; /* largura fixa do card */
+    flex: 0 0 100%;
+    max-width: 100%;
     min-height: 300px; /* altura mínima */
     border-radius: 12px;
     overflow: hidden;

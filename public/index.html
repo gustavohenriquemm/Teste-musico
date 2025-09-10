@@ -57,6 +57,33 @@
 
 <script>
 // ---------------- CARDS DE HINOS ----------------
+let currentIndex = 0;
+
+function atualizarCarrossel() {
+    const cards = document.querySelectorAll(".card");
+    const totalCards = cards.length;
+    const container = document.querySelector(".cards_container");
+
+    // move a lista inteira para mostrar só 1 card
+    container.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
+
+// Botões
+btnPrev.addEventListener("click", () => {
+    const cards = document.querySelectorAll(".card");
+    if (cards.length === 0) return;
+    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+    atualizarCarrossel();
+});
+
+btnNext.addEventListener("click", () => {
+    const cards = document.querySelectorAll(".card");
+    if (cards.length === 0) return;
+    currentIndex = (currentIndex + 1) % cards.length;
+    atualizarCarrossel();
+});
+
+// Atualizar depois que carregar os hinos
 async function carregarHinos() {
     try {
         const res = await fetch('/api/hino');
@@ -65,7 +92,6 @@ async function carregarHinos() {
         container.innerHTML = "";
 
         hinos.forEach((hino, index) => {
-            // Formatar data
             let dataFormatada = hino.data;
             if (dataFormatada.includes("-")) {
                 const [ano, mes, dia] = hino.data.split("-");
@@ -91,10 +117,14 @@ async function carregarHinos() {
             container.appendChild(card);
         });
 
+        currentIndex = 0;
+        atualizarCarrossel();
+
     } catch (err) {
         console.error("Erro ao carregar hinos:", err);
     }
 }
+
 
 carregarHinos();
 
