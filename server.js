@@ -72,14 +72,6 @@ app.get('*', (req, res) => {
 
 // 🔹 Ping periódico para manter o servidor acordado
 
-setInterval(async () => {
-    try {
-        await fetch(serverURL);
-        console.log(`Ping enviado para ${serverURL}`);
-    } catch (err) {
-        console.log(`Erro ao pingar ${serverURL}:`, err);
-    }
-}, 10*60*1000); // a cada 10 minutos
 
 // Porta do Render ou local
 const PORT = process.env.PORT || 4000;

@@ -28,7 +28,7 @@ body {
 /* ================== CARROSSEL ================== */
 .carousel-container {
     position: relative;
-    padding-top: 5rem;
+    padding-top: 1rem;
     margin: 0 auto;
     width: 80%; /* ou a largura que desejar */
 }
@@ -36,7 +36,7 @@ body {
 
 .cards_container {
     display: flex;
-    gap: 15px;
+    gap: 1rem;
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 10px;
