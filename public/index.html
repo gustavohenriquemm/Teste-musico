@@ -17,26 +17,27 @@
 
     <!-- Calendário -->
     <div class="calendar">
-      <header>
-        <button id="prev">&#9664;</button>
-        <h2 id="monthYear"></h2>
-        <button id="next">&#9654;</button>
-      </header>
-      <table>
-        <thead>
-          <tr>
-            <th>Dom</th>
-            <th>Seg</th>
-            <th>Ter</th>
-            <th>Qua</th>
-            <th>Qui</th>
-            <th>Sex</th>
-            <th>Sáb</th>
-          </tr>
-        </thead>
-        <tbody id="calendarBody"></tbody>
-      </table>
-    </div> 
+        <header>
+          <button id="prev">&#9664;</button>
+          <h2 id="monthYear"></h2>
+          <button id="next">&#9654;</button>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody id="calendarBody"></tbody>
+        </table>
+      </div>
+
 
     <!-- Botões laterais -->
     <div class="central_buton_lado">
@@ -203,7 +204,6 @@ btnNext.addEventListener("click", () => {
   currentIndex = (currentIndex + 1) % cards.length;
   atualizarCarrossel();
 });
-
   </script>
 </body>
 </html>
