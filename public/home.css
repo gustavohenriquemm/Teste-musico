@@ -171,10 +171,22 @@ body {
 }
 
 
-.edit-btn {
-  left: 10px;
-  background-color: #4caf50;
+
+
+.card .edit-btn {
+  position: absolute;
+  top: 8px; /* Ajuste a distância do topo */
+  left: 8px; /* Ajuste a distância da esquerda */
+  background-color: #3948cf;
   color: #fff;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 16px;
 }
 
 
@@ -239,6 +251,7 @@ body {
   border-radius: 10px;
   color: white;
   padding-bottom: 15px;
+  overflow-x: auto; /* permite rolar horizontalmente em telas pequenas */
 }
 
 .calendar header {
@@ -253,26 +266,34 @@ body {
   font-size: 1.3em;
 }
 
+
 .calendar table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed; /* distribui as colunas igualmente */
+}
+.calendar th, .calendar td {
+  text-align: center;
+  padding: 5px; /* diminui o padding para caber em telas pequenas */
+  word-wrap: break-word; /* quebra palavras grandes */
+  white-space: normal;
 }
 
-.calendar th,
-.calendar td {
-  text-align: center;
-  padding: 10px;
-}
 
 .calendar th {
+  font-size: 1rem; /* reduz fonte para caber */
   background: rgba(42,25,194,0.5);
+}
+
+.calendar td {
+  font-size: 0.85em;
+  cursor: pointer;
 }
 
 .calendar td:hover {
   background: rgba(209,231,221,0.5);
   cursor: pointer;
 }
-
 .today {
   background: rgba(26,9,255,0.67);
   border-radius: 50%;
@@ -299,4 +320,12 @@ body {
 
 #limparTabela:hover {
   transform: translateY(-3px);
+}
+
+
+@media (max-width: 400px) {
+  .calendar th, .calendar td {
+    padding: 4px;
+    font-size: 0.8em;
+  }
 }
