@@ -42,7 +42,7 @@ body {
 }
 
 .card {
-  position: relative; /* adicione esta linha */
+  position: relative;
   flex: 0 0 100%;
   max-width: 100%;
   min-height: 300px;
@@ -51,7 +51,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 15px;
+  padding: 40px 15px 15px 15px; /* aumentei padding-top */
   color: white;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
   background-size: cover;
@@ -69,6 +69,7 @@ body {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 8px;
+   margin-top: 40px; /* empurra o título para baixo do botão */
 }
 
 .card p {
@@ -100,7 +101,6 @@ body {
 
 /* Botão deletar */
 .card .delete-btn {
-    padding-bottom: 1rem;
   position: absolute;
   top: 10px;
   right: 10px;
@@ -178,20 +178,18 @@ body {
 /* Botões no card */
 .card .edit-btn {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #3948cf;
-  color: #fff;
+  top: 5px; /* mais perto da borda */
+  left: 5px;
   z-index: 3;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 16px;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
+  background-color: #3948cf;
+  color: #fff;
+  font-size: 14px;
 }
 
 /* ================== GRUPOS ================== */
