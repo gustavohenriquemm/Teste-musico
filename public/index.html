@@ -82,15 +82,17 @@ async function carregarHinos() {
         card.classList.add(grupoClass);
 
       card.innerHTML = `
-        <button class="delete-btn" onclick="deletarHino(${index})">🗑</button>
-        <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
-        <p class="Card_data"><strong>Data do Culto:</strong> ${dataFormatada}</p>
-        <p class="Card_tipo"><strong>Tipo do Culto:</strong> ${hino.tipo || 'Culto de Louvor'}</p>
-        <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
-        <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || 'C Maior'}</p>
-        <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
-        <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
-      `;
+            <button class="edit-btn" onclick="editarHino(${index})">✏️</button>
+            <button class="delete-btn" onclick="deletarHino(${index})">🗑</button>
+            <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
+            <p class="Card_data"><strong>Data do Culto:</strong> ${dataFormatada}</p>
+            <p class="Card_tipo"><strong>Tipo do Culto:</strong> ${hino.tipo || 'Culto de Louvor'}</p>
+            <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
+            <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || 'C Maior'}</p>
+            <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
+            <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
+          `;
+
       container.appendChild(card);
     });
 
@@ -135,6 +137,29 @@ async function deletarHino(index) {
   } catch (err) {
     console.error(err);
     alert("❌ Erro na conexão ao remover hino!");
+  }
+}
+
+function editarHino(index) {
+  const novoNome = prompt("Digite o novo nome do hino:");
+  if (novoNome) {
+    fetch(`/api/hino/${index}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome: novoNome })
+    })
+    .then(res => {
+      if(res.ok) {
+        alert("Hino atualizado!");
+        carregarHinos();
+      } else {
+        alert("Erro ao atualizar hino!");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Erro na conexão ao atualizar hino!");
+    });
   }
 }
 

@@ -69,6 +69,60 @@ app.delete('/api/hino', (req, res) => {
 app.get('*', (req, res) => {
     res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
 });
+// Deletar hino individual pelo índice
+app.delete('/api/hino/:index', (req, res) => {
+  const index = parseInt(req.params.index);
+
+  if (isNaN(index)) return res.status(400).json({ message: 'Índice inválido' });
+
+  let hinos = [];
+  try {
+    const data = fs.readFileSync(hinosFilePath, 'utf-8');
+    hinos = JSON.parse(data);
+  } catch {}
+
+  if (index < 0 || index >= hinos.length) {
+    return res.status(404).json({ message: 'Hino não encontrado' });
+  }
+
+  const removido = hinos.splice(index, 1)[0];
+
+  fs.writeFileSync(hinosFilePath, JSON.stringify(hinos, null, 2));
+  console.log('Hino removido:', removido);
+  res.json({ message: 'Hino removido com sucesso', hino: removido });
+});
+
+
+// Atualizar hino pelo índice
+app.put('/api/hino/:index', (req, res) => {
+  const index = parseInt(req.params.index);
+  const { grupo, data, nome, link, tom, atentem } = req.body;
+
+  if (isNaN(index)) return res.status(400).json({ message: 'Índice inválido' });
+
+  let hinos = [];
+  try {
+    const dataFile = fs.readFileSync(hinosFilePath, 'utf-8');
+    hinos = JSON.parse(dataFile);
+  } catch {}
+
+  if (index < 0 || index >= hinos.length) {
+    return res.status(404).json({ message: 'Hino não encontrado' });
+  }
+
+  // Atualiza apenas os campos que foram enviados
+  if (grupo !== undefined) hinos[index].grupo = grupo;
+  if (data !== undefined) hinos[index].data = data;
+  if (nome !== undefined) hinos[index].nome = nome;
+  if (link !== undefined) hinos[index].link = link;
+  if (tom !== undefined) hinos[index].tom = tom;
+  if (atentem !== undefined) hinos[index].atentem = atentem;
+
+  fs.writeFileSync(hinosFilePath, JSON.stringify(hinos, null, 2));
+  console.log('Hino atualizado:', hinos[index]);
+  res.json({ message: 'Hino atualizado com sucesso', hino: hinos[index] });
+});
+
 
 // 🔹 Ping periódico para manter o servidor acordado
 
