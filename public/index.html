@@ -39,8 +39,51 @@
       </div>
 
 
-    
+    <!-- Botões laterais -->
+    <div class="central_buton_lado">
+      <button class="carousel-btn left" id="btnPrev">&#9664;</button>
+      <button class="carousel-btn right" id="btnNext">&#9654;</button>
+    </div>
+
+    <!-- Carrossel de hinos -->
+    <div class="carousel-container">
+      <div class="cards_container" id="cardsHinos"></div>
+    </div>
+
+    <!-- Botão para limpar hinos -->
+    <div class="container-botao">
+      <button id="limparTabela">Limpar Tabela</button>
+    </div>
+
+    <!-- Modal de Edição -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>Editar Hino</h2>
+    <form id="editForm">
+      <label>Grupo:</label>
+      <input type="text" name="grupo" required>
       
+      <label>Data:</label>
+      <input type="date" name="data" required>
+      
+      <label>Nome:</label>
+      <input type="text" name="nome" required>
+      
+      <label>Link:</label>
+      <input type="url" name="link">
+      
+      <label>Tom:</label>
+      <input type="text" name="tom">
+      
+      <label>Atentem-se:</label>
+      <input type="text" name="atentem">
+      
+      <button type="submit">Salvar Alterações</button>
+    </form>
+  </div>
+</div>
+
   </section>
 
   <script>
@@ -73,6 +116,7 @@ async function carregarHinos() {
         <button class="delete-btn" onclick="deletarHino(${index})">🗑</button>
         <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
         <p class="Card_data"><strong>Data do Culto:</strong> ${dataFormatada}</p>
+        <p class="Card_tipo"><strong>Tipo do Culto:</strong> ${hino.tipo || 'Culto de Louvor'}</p>
         <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
         <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || 'C Maior'}</p>
         <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
