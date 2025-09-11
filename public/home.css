@@ -42,6 +42,7 @@ body {
 }
 
 .card {
+  position: relative; /* adicione esta linha */
   flex: 0 0 100%;
   max-width: 100%;
   min-height: 300px;
@@ -56,6 +57,7 @@ body {
   background-size: cover;
   background-position: center;
 }
+
 
 /* Hover */
 .card:hover {
@@ -93,25 +95,20 @@ body {
 }
 
 /* Botão deletar */
-.card .delete-btn, .edit-btn {
+.card .delete-btn {
   position: absolute;
   top: 10px;
   right: 10px;
+  background-color: red;
+  color: #fff;
   z-index: 3;
-  background: red;
-  border: none;
-  border-radius: 50%;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 6px;
   width: 32px;
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 1; /* ✅ garante que esteja sempre visível */
-  visibility: visible; /* ✅ sempre visível */
+  border-radius: 50%;
+  font-size: 16px;
 }
 .card .delete-btn:hover {
   background: darkred;
@@ -173,10 +170,11 @@ body {
 
 
 
+/* Botões no card */
 .card .edit-btn {
   position: absolute;
-  top: 8px; /* Ajuste a distância do topo */
-  left: 8px; /* Ajuste a distância da esquerda */
+  top: 10px;
+  left: 10px;
   background-color: #3948cf;
   color: #fff;
   z-index: 3;
@@ -188,7 +186,6 @@ body {
   border-radius: 50%;
   font-size: 16px;
 }
-
 
 /* ================== GRUPOS ================== */
 .grupo_mocidade {

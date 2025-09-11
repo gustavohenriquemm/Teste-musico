@@ -20,35 +20,33 @@
     <!-- Link para a página inicial -->
     <a class="Pagina001" href="index.html">Página 2</a>
 
-    <form id="hinoForm" class="form-container_02">
-      
-      <label for="grupo" class="form-label">Qual o grupo?</label>
-      <select id="grupo" name="grupo" class="form-select" required>
-        <option value="">Selecione...</option>
-        <option value="irmas">Irmãs</option>
-        <option value="louvor">Grupo de Louvor</option>
-        <option value="mocidade">Mocidade</option>
-        <option value="jovens">Adolescentes</option>
-        <option value="varoes">Varões</option>
-      </select>
+              <form id="hinoForm" class="form-container_02">
+            
+            <label for="grupo" class="form-label">Qual o grupo?</label>
+            <select id="grupo" name="grupo" class="form-select" required>
+              <option value="">Selecione...</option>
+              <option value="irmas">Irmãs</option>
+              <option value="louvor">Grupo de Louvor</option>
+              <option value="mocidade">Mocidade</option>
+              <option value="jovens">Adolescentes</option>
+              <option value="varoes">Varões</option>
+            </select>
 
-      <label for="dataCulto" class="form-label">Data do culto:</label>
-      <input type="date" id="dataCulto" name="dataCulto" class="form-input" required>
+            <label for="dataCulto" class="form-label">Data do culto:</label>
+            <input type="date" id="dataCulto" name="dataCulto" class="form-input" required>
 
-      <label for="hino" class="form-label">Nome do hino:</label>
-      <input type="text" id="hino" name="hino" class="form-input" placeholder="Digite o nome do hino..." required>
+            <label for="hino" class="form-label">Nome do hino:</label>
+            <input type="text" id="hino" name="hino" class="form-input" placeholder="Digite o nome do hino..." required>
 
-      <label for="link" class="form-label">Link do hino (YouTube):</label>
-      <input type="url" id="link" name="link" class="form-input" placeholder="https://youtube.com/..." required>
+            <label for="link" class="form-label">Link do hino (YouTube):</label>
+            <input type="url" id="link" name="link" class="form-input" placeholder="https://youtube.com/..." required>
 
-      <label for="tom" class="form-label">Tom do hino:</label>
-      <input type="text" id="tom" name="tom" class="form-input" placeholder="Ex: C Maior, G, D#" required>
+            <label for="atentem" class="form-label">Observações / Atentem-se:</label>
+            <textarea id="atentem" name="atentem" class="form-textarea" placeholder="Digite observações importantes..."></textarea>
 
-      <label for="atentem" class="form-label">Observações / Atentem-se:</label>
-      <textarea id="atentem" name="atentem" class="form-textarea" placeholder="Digite observações importantes..."></textarea>
+            <button type="submit" class="form-button">Enviar</button>
+          </form>
 
-      <button type="submit" class="form-button">Enviar</button>
-    </form>
 
   </div>
 </section>
@@ -61,7 +59,6 @@ document.getElementById("hinoForm").addEventListener("submit", async function(e)
     const dataCulto = document.getElementById("dataCulto").value;
     const hino = document.getElementById("hino").value;
     const link = document.getElementById("link").value;
-    const tom = document.getElementById("tom").value;
     const atentem = document.getElementById("atentem").value;
 
     try {
@@ -73,7 +70,7 @@ document.getElementById("hinoForm").addEventListener("submit", async function(e)
                 data: dataCulto,
                 nome: hino,
                 link,
-                tom,
+                tom: 'C Maior', // aqui você pode definir um valor fixo ou deixar o backend usar o valor anterior
                 atentem
             })
         });
