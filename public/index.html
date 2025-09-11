@@ -39,28 +39,14 @@
       </div>
 
 
-    <!-- Botões laterais -->
-    <div class="central_buton_lado">
-      <button class="carousel-btn left" id="btnPrev">&#9664;</button>
-      <button class="carousel-btn right" id="btnNext">&#9654;</button>
-    </div>
-
-    <!-- Carrossel de hinos -->
-    <div class="carousel-container">
-      <div class="cards_container" id="cardsHinos"></div>
-    </div>
-
-    <!-- Botão para limpar hinos -->
-    <div class="container-botao">
-      <button id="limparTabela">Limpar Tabela</button>
-    </div>
     
-
+      
   </section>
 
   <script>
-    // ---------------- CARDS DE HINOS ----------------
+// ---------------- CARDS DE HINOS ----------------
 let currentIndex = 0;
+let hinoAtualIndex = null; // índice do hino que está sendo editado
 
 async function carregarHinos() {
   try {
@@ -80,19 +66,18 @@ async function carregarHinos() {
       card.classList.add("card");
 
       const grupoClass = `grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`;
-        card.classList.add(grupoClass);
+      card.classList.add(grupoClass);
 
       card.innerHTML = `
-            <button class="edit-btn" onclick="editarHino(${index})">✏️</button>
-            <button class="delete-btn" onclick="deletarHino(${index})">🗑</button>
-            <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
-            <p class="Card_data"><strong>Data do Culto:</strong> ${dataFormatada}</p>
-            <p class="Card_tipo"><strong>Tipo do Culto:</strong> ${hino.tipo || 'Culto de Louvor'}</p>
-            <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
-            <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || 'C Maior'}</p>
-            <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
-            <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
-          `;
+        <button class="edit-btn" onclick="abrirModalEdicao(${index})">✏️</button>
+        <button class="delete-btn" onclick="deletarHino(${index})">🗑</button>
+        <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
+        <p class="Card_data"><strong>Data do Culto:</strong> ${dataFormatada}</p>
+        <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
+        <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || 'C Maior'}</p>
+        <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
+        <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
+      `;
 
       container.appendChild(card);
     });
@@ -141,30 +126,72 @@ async function deletarHino(index) {
   }
 }
 
-function editarHino(index) {
-  const novoNome = prompt("Digite o novo nome do hino:");
-  if (novoNome) {
-    fetch(`/api/hino/${index}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome: novoNome })
-    })
-    .then(res => {
-      if(res.ok) {
-        alert("Hino atualizado!");
-        carregarHinos();
-      } else {
-        alert("Erro ao atualizar hino!");
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Erro na conexão ao atualizar hino!");
+// ----------- MODAL DE EDIÇÃO -----------
+const editModal = document.getElementById("editModal");
+const editForm = document.getElementById("editForm");
+const closeBtn = document.querySelector(".close-btn");
+
+function abrirModalEdicao(index) {
+  hinoAtualIndex = index;
+  fetch('/api/hino')
+    .then(res => res.json())
+    .then(hinos => {
+      const hino = hinos[index];
+      if (!hino) return alert("Hino não encontrado!");
+
+      // Preenche o formulário
+      editForm.grupo.value = hino.grupo || '';
+      editForm.data.value = hino.data || '';
+      editForm.nome.value = hino.nome || '';
+      editForm.link.value = hino.link || '';
+      editForm.tom.value = hino.tom || '';
+      editForm.atentem.value = hino.atentem || '';
+
+      // Mostra o modal
+      editModal.style.display = "block";
     });
-  }
 }
 
+// Fecha o modal
+closeBtn.onclick = () => editModal.style.display = "none";
+window.onclick = (event) => {
+  if (event.target == editModal) editModal.style.display = "none";
+}
+
+// Salvar alterações do modal
+editForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const dadosAtualizados = {
+    grupo: editForm.grupo.value,
+    data: editForm.data.value,
+    nome: editForm.nome.value,
+    link: editForm.link.value,
+    tom: editForm.tom.value,
+    atentem: editForm.atentem.value
+  };
+
+  fetch(`/api/hino/${hinoAtualIndex}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dadosAtualizados)
+  })
+  .then(res => {
+    if(res.ok){
+      alert("Hino atualizado com sucesso!");
+      carregarHinos();
+      editModal.style.display = "none";
+    } else {
+      alert("Erro ao atualizar hino!");
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Erro na conexão ao atualizar hino!");
+  });
+});
+
 // ----------- CALENDÁRIO -----------
+// (seu código do calendário permanece igual)
 const monthYear = document.getElementById("monthYear");
 const calendarBody = document.getElementById("calendarBody");
 const prevBtn = document.getElementById("prev");
