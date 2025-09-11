@@ -118,7 +118,7 @@ async function carregarHinos() {
         <p class="Card_data"><strong>Data do Culto:</strong> ${dataFormatada}</p>
         <p class="Card_tipo"><strong>Tipo do Culto:</strong> ${hino.tipo || 'Culto de Louvor'}</p>
         <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
-        <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || 'C Maior'}</p>
+        <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || ''}</p>
         <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
         <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
       `;

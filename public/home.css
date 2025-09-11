@@ -94,6 +94,10 @@ body {
   background: #3528ac;
 }
 
+.central_buton_lado {
+  padding-bottom: 1rem;
+}
+
 /* Botão deletar */
 .card .delete-btn {
   position: absolute;
