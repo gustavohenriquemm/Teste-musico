@@ -79,7 +79,7 @@ async function carregarHinos() {
       card.classList.add("card");
 
       const grupoClass = `grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`;
-      card.classList.add(grupoClass);
+        card.classList.add(grupoClass);
 
       card.innerHTML = `
         <button class="delete-btn" onclick="deletarHino(${index})">🗑</button>
