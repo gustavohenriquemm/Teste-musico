@@ -28,7 +28,7 @@ app.get('/api/hino', (req, res) => {
 // ... (imports e configuração anteriores permanecem iguais)
 app.post('/api/hino', (req, res) => {
     // agora extraímos tom e atentem também
-    const { grupo, data, nome, link, tom, atentem } = req.body;
+    const { grupo, data, nome, link, atentem } = req.body;
     let hinos = [];
 
     try {
@@ -46,7 +46,6 @@ app.post('/api/hino', (req, res) => {
         data,
         nome,
         link: link || '',
-        tom: tom || '',
         atentem: atentem || ''
     };
 
@@ -96,7 +95,7 @@ app.delete('/api/hino/:index', (req, res) => {
 // Atualizar hino pelo índice
 app.put('/api/hino/:index', (req, res) => {
   const index = parseInt(req.params.index);
-  const { grupo, data, nome, link, tom, atentem } = req.body;
+  const { grupo, data, nome, link, atentem } = req.body;
 
   if (isNaN(index)) return res.status(400).json({ message: 'Índice inválido' });
 
@@ -115,7 +114,6 @@ app.put('/api/hino/:index', (req, res) => {
   if (data !== undefined) hinos[index].data = data;
   if (nome !== undefined) hinos[index].nome = nome;
   if (link !== undefined) hinos[index].link = link;
-  if (tom !== undefined) hinos[index].tom = tom;
   if (atentem !== undefined) hinos[index].atentem = atentem;
 
   fs.writeFileSync(hinosFilePath, JSON.stringify(hinos, null, 2));

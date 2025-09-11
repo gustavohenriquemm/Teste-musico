@@ -60,7 +60,6 @@ document.getElementById("hinoForm").addEventListener("submit", async function(e)
     const dataCulto = document.getElementById("dataCulto").value;
     const hino = document.getElementById("hino").value;
     const link = document.getElementById("link").value;
-    const tom = document.getElementById("tom").value;
     const atentem = document.getElementById("atentem").value;
 
     try {
@@ -72,7 +71,6 @@ document.getElementById("hinoForm").addEventListener("submit", async function(e)
                 data: dataCulto,
                 nome: hino,
                 link,
-                tom,
                 atentem
             })
         });
