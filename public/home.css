@@ -51,7 +51,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 40px 15px 15px 15px; /* aumentei padding-top */
+  padding: 25px 15px 15px 15px; /* aumentei padding-top */
   color: white;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
   background-size: cover;
