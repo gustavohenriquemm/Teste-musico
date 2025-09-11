@@ -41,9 +41,7 @@
       <label for="link" class="form-label">Link do hino (YouTube):</label>
       <input type="url" id="link" name="link" class="form-input" placeholder="https://youtube.com/..." required>
 
-      <label for="tom" class="form-label">Tom do hino:</label>
-      <input type="text" id="tom" name="tom" class="form-input" placeholder="Ex: C Maior, G, D#" required>
-
+      
       <label for="atentem" class="form-label">Observações / Atentem-se:</label>
       <textarea id="atentem" name="atentem" class="form-textarea" placeholder="Digite observações importantes..."></textarea>
 
@@ -61,7 +59,7 @@ document.getElementById("hinoForm").addEventListener("submit", async function(e)
     const dataCulto = document.getElementById("dataCulto").value;
     const hino = document.getElementById("hino").value;
     const link = document.getElementById("link").value;
-    const tom = document.getElementById("tom").value;
+  
     const atentem = document.getElementById("atentem").value;
 
     try {
@@ -73,7 +71,7 @@ document.getElementById("hinoForm").addEventListener("submit", async function(e)
                 data: dataCulto,
                 nome: hino,
                 link,
-                tom,
+             
                 atentem
             })
         });
