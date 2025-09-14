@@ -341,11 +341,12 @@ body {
 }
 
 .card-date-title {
-  display: block;       /* garante que fique em linha própria */
-  width: 100%;          /* ocupa toda a largura */
+  display: block;       /* já estava */
+  width: 100%;          /* garante ocupar toda a linha */
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-size: 1.2rem;
   color: #6a1b9a;
-  text-align: left;     /* opcional: alinha à esquerda */
+  text-align: left;     /* opcional */
+  flex-basis: 100%;     /* força a linha inteira dentro do flex */
 }
