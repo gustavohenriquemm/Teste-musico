@@ -159,3 +159,17 @@
   background-color: rgba(106,27,154,0.6);
   border-radius: 50%;
 }
+
+.card-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto; /* Permite rolar se houver muitos cards */
+  padding-bottom: 1rem;
+}
+
+.card-date-title {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #6a1b9a;
+}
