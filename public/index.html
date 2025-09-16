@@ -1,22 +1,22 @@
-  <!DOCTYPE html>
-  <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda de Hinos</title>
-    <link rel="stylesheet" href="home.css">
-    <link rel="apple-touch-icon" href="img/pql.png">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#6a1b9a">
-  </head>
-  <body>
-    <section class="central">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda de Hinos</title>
+  <link rel="stylesheet" href="home.css">
+  <link rel="apple-touch-icon" href="img/pql.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6a1b9a">
+</head>
+<body>
+  <section class="central">
 
-      <!-- Link para o formulário -->
-      <a class="Pagina001" href="Formulario.html">Página 2</a>
+    <!-- Link para o formulário -->
+    <a class="Pagina001" href="Formulario.html">Página 2</a>
 
-      <!-- Calendário -->
-      <div class="calendar">
+    <!-- Calendário -->
+    <div class="calendar">
         <header>
           <button id="prev">&#9664;</button>
           <h2 id="monthYear"></h2>
@@ -38,115 +38,156 @@
         </table>
       </div>
 
-      <!-- Tabelas de hinos -->
-      <div id="tabelasHinos"></div>
 
-      <!-- Botão para limpar hinos -->
-      <div class="container-botao">
-        <button id="limparTabela">Limpar Tabela</button>
-      </div>
+    <!-- Botões laterais -->
+    <div class="central_buton_lado">
+      <button class="carousel-btn left" id="btnPrev">&#9664;</button>
+      <button class="carousel-btn right" id="btnNext">&#9654;</button>
+    </div>
 
-      <!-- Modal de Edição -->
-      <div id="editModal" class="modal">
-        <div class="modal-content">
-          <span class="close-btn">&times;</span>
-          <h2>Editar Hino</h2>
-          <form id="editForm">
-            <label>Grupo:</label>
-            <input type="text" name="grupo" required>
-            
-            <label>Data:</label>
-            <input type="date" name="data" required>
-            
-            <label>Nome:</label>
-            <input type="text" name="nome" required>
-            
-            <label>Link:</label>
-            <input type="url" name="link">
-            
-            <label>Tom:</label>
-            <input type="text" name="tom">
-            
-            <label>Atentem-se:</label>
-            <input type="text" name="atentem">
-            
-            <button type="submit">Salvar Alterações</button>
-          </form>
-        </div>
-      </div>
+    <!-- Carrossel de hinos -->
+    <div class="carousel-container">
+      <div class="cards_container" id="cardsHinos"></div>
+    </div>
 
-    </section>
+    <!-- Botão para limpar hinos -->
+    <div class="container-botao">
+      <button id="limparTabela">Limpar Tabela</button>
+    </div>
 
-   <!-- Substitua apenas a parte do "Tabelas de hinos" e o script de carregamento -->
+    <!-- Modal de Edição -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>Editar Hino</h2>
+    <form id="editForm">
+      <label>Grupo:</label>
+      <input type="text" name="grupo" required>
+      
+      <label>Data:</label>
+      <input type="date" name="data" required>
+      
+      <label>Nome:</label>
+      <input type="text" name="nome" required>
+      
+      <label>Link:</label>
+      <input type="url" name="link">
+      
+      <label>Tom:</label>
+      <input type="text" name="tom">
+      
+      <label>Atentem-se:</label>
+      <input type="text" name="atentem">
+      
+      <button type="submit">Salvar Alterações</button>
+    </form>
+  </div>
+</div>
 
-<div id="tabelasHinos"></div>
+  </section>
 
-<script>
-let hinoAtualIndex = null;
+  <script>
+// ---------------- CARDS DE HINOS ----------------
+let currentIndex = 0;
+let hinoAtualIndex = null; // índice do hino que está sendo editado
 
-// ---------- CARREGAR HINOS EM CARDS POR DATA ----------
-async function carregarHinosPorTabela() {
+async function carregarHinos() {
   try {
     const res = await fetch('/api/hino');
     const hinos = await res.json();
-    const container = document.getElementById("tabelasHinos");
+    const container = document.getElementById("cardsHinos");
     container.innerHTML = "";
 
-    // Agrupa hinos por data
+    // Agrupa os hinos por data
     const hinosPorData = {};
     hinos.forEach((hino, index) => {
-      const dataFormatada = hino.data.includes("-") 
-        ? `${hino.data.split("-")[2]}/${hino.data.split("-")[1]}/${hino.data.split("-")[0]}`
-        : hino.data;
-      if (!hinosPorData[dataFormatada]) hinosPorData[dataFormatada] = [];
+      let dataFormatada = hino.data;
+      if (dataFormatada.includes("-")) {
+        const [ano, mes, dia] = hino.data.split("-");
+        dataFormatada = `${dia}/${mes}/${ano}`;
+      }
+      if (!hinosPorData[dataFormatada]) {
+        hinosPorData[dataFormatada] = [];
+      }
       hinosPorData[dataFormatada].push({ ...hino, index });
     });
 
-    // Cria cards para cada data
-    for (const data in hinosPorData) {
-      const cardData = document.createElement("div");
-      cardData.classList.add("card-data");
+    // Renderiza os grupos de datas
+    Object.keys(hinosPorData).forEach(data => {
+      // bloco da data
+      const blocoData = document.createElement("div");
+      blocoData.classList.add("grupo-data");
 
-      const titulo = document.createElement("h3");
-      titulo.textContent = `Data: ${data}`;
-      cardData.appendChild(titulo);
+      // título da data
+      const titulo = document.createElement("h2");
+      titulo.classList.add("titulo-data");
+      titulo.textContent = data;
+      blocoData.appendChild(titulo);
+
+      // container dos cards
+      const cardsWrapper = document.createElement("div");
+      cardsWrapper.classList.add("cards_wrapper");
 
       hinosPorData[data].forEach(hino => {
-        const cardHino = document.createElement("div");
-        cardHino.classList.add("card-hino");
+        const card = document.createElement("div");
+        card.classList.add("card");
 
-        cardHino.innerHTML = `
-          <div><strong>Grupo:</strong> ${hino.grupo}</div>
-          <div><strong>Nome:</strong> ${hino.nome}</div>
-          <div><strong>Tom:</strong> ${hino.tom || ''}</div>
-          <div><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</div>
-          <div><a href="${hino.link}" target="_blank">Assistir</a></div>
-          <div>
-            <button onclick="abrirModalEdicao(${hino.index})">✏️</button>
-            <button onclick="deletarHino(${hino.index})">🗑</button>
-          </div>
+        const grupoClass = `grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`;
+        card.classList.add(grupoClass);
+
+        card.innerHTML = `
+          <button class="edit-btn" onclick="abrirModalEdicao(${hino.index})">✏️</button>
+          <button class="delete-btn" onclick="deletarHino(${hino.index})">🗑</button>
+          <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
+          <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
+          <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || ''}</p>
+          <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
+          <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
         `;
-        cardData.appendChild(cardHino);
+
+        cardsWrapper.appendChild(card);
       });
 
-      container.appendChild(cardData);
-    }
+      blocoData.appendChild(cardsWrapper);
+      container.appendChild(blocoData);
+    });
+
+    currentIndex = 0;
+    atualizarCarrossel();
 
   } catch (err) {
     console.error("Erro ao carregar hinos:", err);
   }
 }
 
-carregarHinosPorTabela();
+carregarHinos();
 
-// ---------- DELETAR HINO ----------
+// Atualiza posição do carrossel
+function atualizarCarrossel() {
+  const container = document.querySelector(".cards_container");
+  container.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
+
+// Limpar todos os hinos
+document.getElementById("limparTabela").addEventListener("click", async () => {
+  try {
+    await fetch('/api/hino', { method: 'DELETE' });
+    carregarHinos();
+    alert("Cards de hinos limpos com sucesso!");
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao limpar cards!");
+  }
+});
+
+// Deletar hino individual
 async function deletarHino(index) {
   if (!confirm("Deseja realmente excluir este hino?")) return;
   try {
     const res = await fetch(`/api/hino/${index}`, { method: 'DELETE' });
     if (res.ok) {
       alert("✅ Hino removido!");
-      carregarHinosPorTabela();
+      carregarHinos();
     } else {
       alert("❌ Erro ao remover hino!");
     }
@@ -156,7 +197,7 @@ async function deletarHino(index) {
   }
 }
 
-// ---------- MODAL DE EDIÇÃO ----------
+// ----------- MODAL DE EDIÇÃO -----------
 const editModal = document.getElementById("editModal");
 const editForm = document.getElementById("editForm");
 const closeBtn = document.querySelector(".close-btn");
@@ -169,6 +210,7 @@ function abrirModalEdicao(index) {
       const hino = hinos[index];
       if (!hino) return alert("Hino não encontrado!");
 
+      // Preenche o formulário
       editForm.grupo.value = hino.grupo || '';
       editForm.data.value = hino.data || '';
       editForm.nome.value = hino.nome || '';
@@ -176,13 +218,18 @@ function abrirModalEdicao(index) {
       editForm.tom.value = hino.tom || '';
       editForm.atentem.value = hino.atentem || '';
 
+      // Mostra o modal
       editModal.style.display = "block";
     });
 }
 
+// Fecha o modal
 closeBtn.onclick = () => editModal.style.display = "none";
-window.onclick = (event) => { if(event.target == editModal) editModal.style.display = "none"; }
+window.onclick = (event) => {
+  if (event.target == editModal) editModal.style.display = "none";
+}
 
+// Salvar alterações do modal
 editForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const dadosAtualizados = {
@@ -202,7 +249,7 @@ editForm.addEventListener("submit", (e) => {
   .then(res => {
     if(res.ok){
       alert("Hino atualizado com sucesso!");
-      carregarHinosPorTabela();
+      carregarHinos();
       editModal.style.display = "none";
     } else {
       alert("Erro ao atualizar hino!");
@@ -213,7 +260,74 @@ editForm.addEventListener("submit", (e) => {
     alert("Erro na conexão ao atualizar hino!");
   });
 });
-</script>
 
-  </body>
-  </html>
+// ----------- CALENDÁRIO -----------
+// (seu código do calendário permanece igual)
+const monthYear = document.getElementById("monthYear");
+const calendarBody = document.getElementById("calendarBody");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+let currentDate = new Date();
+
+function renderCalendar(date) {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const months = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  monthYear.textContent = `${months[month]} ${year}`;
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
+
+  calendarBody.innerHTML = "";
+  let row = document.createElement("tr");
+
+  for(let i = 0; i < firstDay; i++) row.appendChild(document.createElement("td"));
+
+  for(let day = 1; day <= lastDate; day++){
+    const cell = document.createElement("td");
+    cell.textContent = day;
+
+    const today = new Date();
+    if(day === today.getDate() && month === today.getMonth() && year === today.getFullYear()){
+      cell.classList.add("today");
+    }
+
+    row.appendChild(cell);
+
+    if((firstDay + day) % 7 === 0){
+      calendarBody.appendChild(row);
+      row = document.createElement("tr");
+    }
+  }
+
+  if(row.children.length > 0) calendarBody.appendChild(row);
+}
+prevBtn.addEventListener("click", () => {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  renderCalendar(currentDate);
+});
+nextBtn.addEventListener("click", () => {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  renderCalendar(currentDate);
+});
+renderCalendar(currentDate);
+
+// ----------- CONTROLES DO CARROSSEL -----------
+const btnPrev = document.getElementById("btnPrev");
+const btnNext = document.getElementById("btnNext");
+
+btnPrev.addEventListener("click", () => {
+  const cards = document.querySelectorAll(".card");
+  if (cards.length === 0) return;
+  currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+  atualizarCarrossel();
+});
+btnNext.addEventListener("click", () => {
+  const cards = document.querySelectorAll(".card");
+  if (cards.length === 0) return;
+  currentIndex = (currentIndex + 1) % cards.length;
+  atualizarCarrossel();
+});
+  </script>
+</body>
+</html>

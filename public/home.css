@@ -306,6 +306,7 @@ body {
   display: none;
   justify-content: center;
   margin-top: 20px;
+
 }
 
 #limparTabela {
@@ -324,52 +325,21 @@ body {
   transform: translateY(-3px);
 }
 
-/* ================== BLOCO DE DATAS ================== */
-.card-bloco {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 2.5rem; /* espaço entre um grupo de data e outro */
-}
-
-.card-date-title {
+.titulo-data {
   text-align: center;
-  margin: 1rem 0;
-  font-size: 1.5rem;
-  color: #fff;
-  background: #4f59af;
-  padding: 8px 12px;
-  border-radius: 8px;
+  margin: 20px 0 10px;
+  color: #6a1b9a;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
-/* ================== LINHA DE CARDS ================== */
-.card-row {
+.cards_wrapper {
   display: flex;
-  flex-wrap: nowrap;       /* mantém lado a lado */
-  gap: 1rem;
-  overflow-x: auto;        /* rolagem horizontal */
-  padding-bottom: 0.5rem;
-  scroll-snap-type: x mandatory;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
 }
 
-.card-row::-webkit-scrollbar {
-  height: 8px;
-}
-.card-row::-webkit-scrollbar-thumb {
-  background: #6a1b9a;
-  border-radius: 8px;
-}
-.card-row::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.1);
-}
-
-/* ================== AJUSTE DOS CARDS ================== */
-.card {
-  flex: 0 0 280px;          /* largura fixa */
-  max-width: 280px;
-  min-height: 320px;
-  scroll-snap-align: start;
-}
 
 
 @media (max-width: 400px) {
