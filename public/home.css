@@ -1,161 +1,347 @@
-/* ================== TABELAS DE HINOS ================== */
-#tabelasHinos h3 {
-  margin-top: 30px;
-  margin-bottom: 10px;
-  font-size: 1.2em;
-  color: #4a148c;
-  text-transform: uppercase;
-  border-bottom: 2px solid #6a1b9a;
-  padding-bottom: 5px;
+
+/* ================== RESET ================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.mini-tabela {
+body {
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background: url("img/2.png") center/cover no-repeat;
+  overflow-x: hidden;
+}
+
+/* ================== CENTRAL ================== */
+.central {
+  width: 90%;
+  max-width: 1200px;
+  margin: 3rem auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.Pagina001 {
+  display: none;
+}
+
+/* ================== CARROSSEL ================== */
+.carousel-container {
+  position: relative;
   width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
+  max-width: 400px; /* largura do card */
+  margin: 2rem auto;
+  overflow: hidden; /* esconde os outros cards */
+  border-radius: 12px;
+}
+
+.cards_container {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  flex: 0 0 100%;
+  max-width: 100%;
+  min-height: 300px;
+  border-radius: 12px;
   overflow: hidden;
-}
-
-.mini-tabela th, .mini-tabela td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ccc;
-}
-
-.mini-tabela th {
-  background-color: #6a1b9a;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 25px 15px 15px 15px; /* aumentei padding-top */
   color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+  background-size: cover;
+  background-position: center;
+}
+
+
+/* Hover */
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.card h3 {
+  font-size: 18px;
   font-weight: bold;
+  margin-bottom: 8px;
+   margin-top: 40px; /* empurra o título para baixo do botão */
 }
 
-.mini-tabela tr:hover {
-  background-color: rgba(106,27,154,0.1);
+.card p {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 10px;
 }
 
-.mini-tabela a {
-  color: #6a1b9a;
-  text-decoration: none;
-}
-
-.mini-tabela a:hover {
-  text-decoration: underline;
-}
-
-.mini-tabela button {
-  background-color: #4a148c;
+/* Link */
+.Card_link {
+  display: inline-block;
+  margin-top: auto;
+  padding: 8px 12px;
+  background: #4f59af;
   color: white;
-  border: none;
-  padding: 5px 8px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 3px;
-}
-
-.mini-tabela button:hover {
-  background-color: #6a1b9a;
-}
-
-/* ================== BOTÃO LIMPAR ================== */
-.container-botao {
-  text-align: center;
-  margin-top: 20px;
-}
-
-#limparTabela {
-  padding: 10px 20px;
-  background-color: #d32f2f;
-  color: white;
-  border: none;
   border-radius: 8px;
-  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
 }
 
-#limparTabela:hover {
-  background-color: #b71c1c;
+.Card_link:hover {
+  background: #3528ac;
 }
 
-/* ================== MODAL DE EDIÇÃO ================== */
+.central_buton_lado {
+  padding-bottom: 1rem;
+}
+
+/* Botão deletar */
+.card .delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: #fff;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 16px;
+}
+.card .delete-btn:hover {
+  background: darkred;
+}
+
 .modal {
   display: none;
   position: fixed;
   z-index: 1000;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
 }
 
 .modal-content {
-  background-color: white;
+  background-color: #fff;
+  margin: 10% auto;
   padding: 20px;
   border-radius: 10px;
-  max-width: 400px;
   width: 90%;
+  max-width: 400px;
   position: relative;
 }
 
 .close-btn {
   position: absolute;
-  top: 10px; right: 15px;
-  font-size: 1.5em;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
   cursor: pointer;
-  color: #333;
 }
 
-.modal-content form input, 
-.modal-content form button {
+.modal form label {
+  display: block;
+  margin-top: 10px;
+}
+
+.modal form input {
   width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  padding: 5px;
+  margin-top: 3px;
+  box-sizing: border-box;
 }
 
-.modal-content form button {
-  background-color: #6a1b9a;
+.modal form button {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  background-color: #4caf50;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+
+
+/* Botões no card */
+.card .edit-btn {
+  position: absolute;
+  top: 5px; /* mais perto da borda */
+  left: 5px;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #3948cf;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* ================== GRUPOS ================== */
+.grupo_mocidade {
+  background: url("/img/IMG mocidade.png") no-repeat center/cover;
+  background-color: #0f0852b2;
+  border: 2px solid #2196f3;
+}
+.grupo_adolescentes {
+  background: url("/img/Adolecentes.png") no-repeat center/cover;
+  background-color: rgba(0, 0, 0, 0.438);
+  border: 2px solid #000000;
+}
+.grupo_irmãs,
+.grupo_irmas {
+  background: url("/img/Irmas.png") no-repeat center/cover;
+  background-color:rgba(233, 169, 169, 0.664) ;
+  border: 2px solid #e91e63;
+}
+.grupo_varões,
+.grupo_varoes {
+  background: url("/img/Varoes.png") no-repeat center/cover;
+  background-color:#5952b99d ;
+  border: 2px solid #5952b9;
+}
+.grupo_grupo_de_louvor {
+  background: url("/img/Grupo_louvor.png") no-repeat center/cover;
+  background-color: #ec8e5780;
+  border: 2px solid #f15900;
+}
+
+/* ================== BOTÕES DO CARROSSEL ================== */
+.central_buton_lado {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.carousel-btn {
+  background: #0f0852;
   color: white;
   border: none;
+  font-size: 24px;
   cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 12px;
 }
 
-.modal-content form button:hover {
-  background-color: #4a148c;
+.carousel-btn:hover {
+  background: #2516a7;
 }
 
 /* ================== CALENDÁRIO ================== */
 .calendar {
   width: 100%;
   max-width: 450px;
-  margin: 20px auto;
-  background: rgba(106,27,154,0.2);
+  margin: 0 auto;
+  background: rgba(42,25,194,0.28);
   border-radius: 10px;
   color: white;
   padding-bottom: 15px;
-  overflow-x: auto;
+  overflow-x: auto; /* permite rolar horizontalmente em telas pequenas */
 }
 
 .calendar header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  background: rgba(42,25,194,0.5);
+  padding: 15px;
 }
+
+.calendar header h2 {
+  font-size: 1.3em;
+}
+
 
 .calendar table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: fixed; /* distribui as colunas igualmente */
 }
-
 .calendar th, .calendar td {
   text-align: center;
-  padding: 8px 0;
+  padding: 5px; /* diminui o padding para caber em telas pequenas */
+  word-wrap: break-word; /* quebra palavras grandes */
+  white-space: normal;
 }
 
-.calendar .today {
-  background-color: rgba(106,27,154,0.6);
+
+.calendar th {
+  font-size: 1rem; /* reduz fonte para caber */
+  background: rgba(42,25,194,0.5);
+}
+
+.calendar td {
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+.calendar td:hover {
+  background: rgba(209,231,221,0.5);
+  cursor: pointer;
+}
+.today {
+  background: rgba(26,9,255,0.67);
   border-radius: 50%;
+}
+
+/* ================== BOTÃO LIMPAR ================== */
+.container-botao {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#limparTabela {
+  background: linear-gradient(135deg, #6a5acd, #483d8b);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+#limparTabela:hover {
+  transform: translateY(-3px);
+}
+
+
+.card-bloco {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 2rem; /* espaço entre blocos de datas */
+}
+
+.card-date-title {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #6a1b9a;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
 }

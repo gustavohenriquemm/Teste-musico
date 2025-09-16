@@ -92,44 +92,6 @@ app.delete('/api/hino/:index', (req, res) => {
   res.json({ message: 'Hino removido com sucesso', hino: removido });
 });
 
-// Atualizar hino pelo índice
-app.put('/api/hino/:index', (req, res) => {
-  const index = parseInt(req.params.index);
-  const { grupo, data, nome, link, tom, atentem } = req.body;
-
-  if (isNaN(index)) return res.status(400).json({ message: 'Índice inválido' });
-
-  let hinos = [];
-  try {
-    const dataFile = fs.readFileSync(hinosFilePath, 'utf-8');
-    hinos = JSON.parse(dataFile);
-  } catch {
-    return res.status(500).json({ message: 'Erro ao ler arquivo de hinos' });
-  }
-
-  if (index < 0 || index >= hinos.length) {
-    return res.status(404).json({ message: 'Hino não encontrado' });
-  }
-
-  // Atualiza apenas os campos recebidos
-  hinos[index] = {
-    ...hinos[index],
-    grupo: grupo || hinos[index].grupo,
-    data: data || hinos[index].data,
-    nome: nome || hinos[index].nome,
-    link: link || hinos[index].link,
-    tom: tom || hinos[index].tom,
-    atentem: atentem || hinos[index].atentem
-  };
-
-  try {
-    fs.writeFileSync(hinosFilePath, JSON.stringify(hinos, null, 2));
-    console.log('Hino atualizado:', hinos[index]);
-    res.json({ message: 'Hino atualizado com sucesso', hino: hinos[index] });
-  } catch {
-    res.status(500).json({ message: 'Erro ao salvar hino' });
-  }
-});
 
 
 
