@@ -98,63 +98,60 @@ async function carregarHinos() {
     const container = document.getElementById("cardsHinos");
     container.innerHTML = "";
 
-    // Agrupar hinos por data
-    const hinosPorData = {};
-    hinos.forEach(hino => {
-      if(!hinosPorData[hino.data]) hinosPorData[hino.data] = [];
-      hinosPorData[hino.data].push(hino);
-    });
+      // Agrupa hinos por grupo
+      const grupos = {};
+      hinos.forEach((hino, index) => {
+        if (!grupos[hino.grupo]) grupos[hino.grupo] = [];
+        grupos[hino.grupo].push({ ...hino, index });
+      });
 
-    // Ordenar datas
-const datasOrdenadas = Object.keys(hinosPorData).sort();
+      // Cria tabela para cada grupo
+      for (const grupo in grupos) {
+        const titulo = document.createElement("h3");
+        titulo.textContent = `Grupo: ${grupo}`;
+        container.appendChild(titulo);
 
-// Criar cards por data
-datasOrdenadas.forEach(data => {
-  const row = document.createElement("div");
-  row.classList.add("card-row");
+        const tabela = document.createElement("table");
+        tabela.classList.add("mini-tabela");
 
-  // Título da data
-  const [ano, mes, dia] = data.split("-");
-  const dataFormatada = `${dia}/${mes}/${ano}`;
-  const titulo = document.createElement("h2");
-  titulo.textContent = `Hinos do dia ${dataFormatada}`;
-  titulo.classList.add("card-date-title");
+        // Cabeçalho
+        tabela.innerHTML = `
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Nome do Hino</th>
+              <th>Tom</th>
+              <th>Atentem-se</th>
+              <th>Link</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+        `;
 
-  // Criar o bloco (contêiner da data + cards)
-  const bloco = document.createElement("div");
-  bloco.classList.add("card-bloco");
+        const tbody = document.createElement("tbody");
+        grupos[grupo].forEach(hino => {
+          const tr = document.createElement("tr");
+          const dataFormatada = hino.data.includes("-") 
+            ? `${hino.data.split("-")[2]}/${hino.data.split("-")[1]}/${hino.data.split("-")[0]}`
+            : hino.data;
 
-  // Adiciona título e cards dentro do bloco
-  bloco.appendChild(titulo);
-  bloco.appendChild(row);
+          tr.innerHTML = `
+            <td>${dataFormatada}</td>
+            <td>${hino.nome}</td>
+            <td>${hino.tom || ''}</td>
+            <td>${hino.atentem || 'Nenhum'}</td>
+            <td><a href="${hino.link}" target="_blank">Assistir</a></td>
+            <td>
+              <button onclick="abrirModalEdicao(${hino.index})">✏️</button>
+              <button onclick="deletarHino(${hino.index})">🗑</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
 
-  // Adiciona o bloco ao container principal
-  container.appendChild(bloco);
-
-  // Agora, adicionar os cards dentro do row
-  hinosPorData[data].forEach((hino, index) => {
-    const card = document.createElement("div");
-    card.classList.add("card");
-
-    const grupoClass = `grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`;
-    card.classList.add(grupoClass);
-
-    card.innerHTML = `
-      <button class="edit-btn" onclick="abrirModalEdicao(${index})">✏️</button>
-      <button class="delete-btn" onclick="deletarHino(${index})">🗑</button>
-      <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
-      <p class="Card_data"><strong>Data do Culto:</strong> ${dataFormatada}</p>
-      <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
-      <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || ''}</p>
-      <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
-      <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
-    `;
-    row.appendChild(card);
-  });
-});
-
-
-    
+        tabela.appendChild(tbody);
+        container.appendChild(tabela);
+      }
 
   } catch (err) {
     console.error("Erro ao carregar hinos:", err);

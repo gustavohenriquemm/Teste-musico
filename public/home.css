@@ -1,25 +1,12 @@
-
-/* ================== RESET ================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-  background: url("img/2.png") center/cover no-repeat;
-  overflow-x: hidden;
-}
-
-/* ================== CENTRAL ================== */
-.central {
-  width: 90%;
-  max-width: 1200px;
-  margin: 3rem auto;
-  display: flex;
-  flex-direction: column;
+/* ================== TABELAS DE HINOS ================== */
+#tabelasHinos h3 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  color: #4a148c;
+  text-transform: uppercase;
+  border-bottom: 2px solid #6a1b9a;
+  padding-bottom: 5px;
 }
 
 .Pagina001 {
@@ -300,48 +287,4 @@ body {
 .today {
   background: rgba(26,9,255,0.67);
   border-radius: 50%;
-}
-
-/* ================== BOTÃO LIMPAR ================== */
-.container-botao {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-#limparTabela {
-  background: linear-gradient(135deg, #6a5acd, #483d8b);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-#limparTabela:hover {
-  transform: translateY(-3px);
-}
-
-
-.card-bloco {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 2rem; /* espaço entre blocos de datas */
-}
-
-.card-date-title {
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #6a1b9a;
-}
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
 }
