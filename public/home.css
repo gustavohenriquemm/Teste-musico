@@ -340,6 +340,20 @@ body {
   gap: 15px;
 }
 
+.cards_wrapper {
+  display: flex;
+  flex-direction: column; /* agora vai ficar em coluna */
+  align-items: center;    /* centraliza no meio */
+  gap: 15px;              /* espaço entre os cards */
+}
+
+.cards_wrapper .card {
+  width: 100%;         /* ocupa a largura toda */
+  max-width: 400px;    /* limite de tamanho */
+}
+
+
+
 
 
 @media (max-width: 400px) {
