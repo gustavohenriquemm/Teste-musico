@@ -247,7 +247,7 @@ body {
 /* ================== CALENDÁRIO ================== */
 .calendar {
   width: 100%;
-  max-width: 450px;
+  max-width: 500px;
   margin: 0 auto;
   background: rgba(42,25,194,0.28);
   border-radius: 10px;
