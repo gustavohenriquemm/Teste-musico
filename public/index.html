@@ -114,19 +114,31 @@ async function carregarHinos() {
 
     // Renderiza os grupos de datas
     Object.keys(hinosPorData).forEach(data => {
-      // bloco da data
-      const blocoData = document.createElement("div");
-      blocoData.classList.add("grupo-data");
+      // 🔎 Verifica se já existe um grupo para essa data
+      let blocoData = container.querySelector(`.grupo-data[data-data="${data}"]`);
 
-      // título da data
-      const titulo = document.createElement("h2");
-      titulo.classList.add("titulo-data");
-      titulo.textContent = data;
-      blocoData.appendChild(titulo);
+      if (!blocoData) {
+        // bloco da data
+        blocoData = document.createElement("div");
+        blocoData.classList.add("grupo-data");
+        blocoData.setAttribute("data-data", data);
 
-      // container dos cards
-      const cardsWrapper = document.createElement("div");
-      cardsWrapper.classList.add("cards_wrapper");
+        // título da data
+        const titulo = document.createElement("h2");
+        titulo.classList.add("titulo-data");
+        titulo.textContent = data;
+        blocoData.appendChild(titulo);
+
+        // container dos cards
+        const cardsWrapper = document.createElement("div");
+        cardsWrapper.classList.add("cards_wrapper");
+
+        blocoData.appendChild(cardsWrapper);
+        container.appendChild(blocoData);
+      }
+
+      // pega o wrapper da data existente
+      const cardsWrapper = blocoData.querySelector(".cards_wrapper");
 
       hinosPorData[data].forEach(hino => {
         const card = document.createElement("div");
@@ -147,9 +159,6 @@ async function carregarHinos() {
 
         cardsWrapper.appendChild(card);
       });
-
-      blocoData.appendChild(cardsWrapper);
-      container.appendChild(blocoData);
     });
 
     currentIndex = 0;
@@ -159,6 +168,7 @@ async function carregarHinos() {
     console.error("Erro ao carregar hinos:", err);
   }
 }
+
 
 carregarHinos();
 
