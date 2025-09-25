@@ -350,11 +350,10 @@ body {
 
 .cards_wrapper {
   display: flex;
-  flex-direction: row;  /* cards na horizontal */
-  flex-wrap: wrap;      /* quebra linha se passar do limite */
-  justify-content: flex-start; /* começa da esquerda */
-  gap: 15px;            /* espaço entre os cards */
-  align-items: stretch; /* altura igual */
+  flex-direction: row;      /* cards na horizontal */
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
 }
 
 .cards_wrapper .card {
@@ -365,7 +364,7 @@ body {
 
 .datas_container {
   display: flex;
-  flex-direction: column;   /* datas em coluna, um embaixo do outro */
+  flex-direction: column;   /* cada data em uma linha */
   gap: 30px;
   width: 100%;
 }
