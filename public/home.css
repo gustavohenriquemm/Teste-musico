@@ -330,10 +330,10 @@ body {
 
 .cards_wrapper {
   display: flex;
-  flex-direction: column; /* <-- MUDE de row para column */
+  flex-direction: row; /* <-- MUDE para row */
   gap: 15px;
   justify-content: center;
-  align-items: center; /* centraliza os cards */
+  align-items: flex-start;
   width: 100%;
 }
 
