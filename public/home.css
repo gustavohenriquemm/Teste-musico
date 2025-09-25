@@ -27,11 +27,10 @@ body {
 
 /* ================== CARROSSEL ================== */
 .carousel-container {
-  position: relative;
   width: 100%;
-  max-width: 400px; /* largura do card */
+  max-width: 500px;
   margin: 2rem auto;
-  overflow: hidden; /* esconde os outros cards */
+  overflow: visible;
   border-radius: 12px;
 }
 
@@ -325,40 +324,21 @@ body {
   text-align: center;
   margin: 20px 0 10px;
   color: #6a1b9a;
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-weight: bold;
 }
 
 .cards_wrapper {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-}
-
-.cards_wrapper {
-  display: flex;
-  flex-direction: column; /* agora vai ficar em coluna */
-  align-items: center;    /* centraliza no meio */
-  gap: 15px;              /* espaço entre os cards */
-}
-
-.cards_wrapper .card {
-  width: 100%;         /* ocupa a largura toda */
-  max-width: 400px;    /* limite de tamanho */
-}
-
-.cards_wrapper {
-  display: flex;
-  flex-direction: row;      /* cards na horizontal */
+  flex-direction: row;
   gap: 15px;
   justify-content: center;
   width: 100%;
 }
 
 .cards_wrapper .card {
-  flex: 0 0 250px;  /* largura fixa de cada card */
-  max-width: 250px;
+  flex: 0 0 220px;
+  max-width: 220px;
   width: 100%;
 }
 
@@ -371,8 +351,9 @@ body {
 
 .grupo-data {
   display: flex;
-  flex-direction: column;   /* título em cima, cards embaixo */
+  flex-direction: column;
   align-items: center;
+  margin-bottom: 30px;
   width: 100%;
 }
 
