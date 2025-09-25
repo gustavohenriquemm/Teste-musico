@@ -363,22 +363,18 @@ body {
   width: 100%;
 }
 
-/* ================== NOVAS ESTILIZAÇÕES ================== */
 .datas_container {
   display: flex;
-  flex-direction: row;      /* datas em colunas */
-  gap: 30px;                /* espaço entre as datas */
-  justify-content: flex-start;
-  align-items: flex-start;
+  flex-direction: column;   /* datas em coluna, um embaixo do outro */
+  gap: 30px;
   width: 100%;
-  overflow-x: auto;         /* rolagem horizontal se necessário */
 }
 
 .grupo-data {
   display: flex;
   flex-direction: column;   /* título em cima, cards embaixo */
   align-items: center;
-  min-width: 280px;         /* largura mínima de cada coluna */
+  width: 100%;
 }
 
 @media (max-width: 400px) {

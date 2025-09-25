@@ -101,51 +101,56 @@ async function carregarHinos() {
     // Agrupa os hinos por data
     const hinosPorData = {};
     hinos.forEach((hino, index) => {
-      const dataFormatada = hino.data; // ajuste conforme o formato da data
-      if (!hinosPorData[dataFormatada]) hinosPorData[dataFormatada] = [];
+      let dataFormatada = hino.data;
+      if (dataFormatada.includes("-")) {
+        const [ano, mes, dia] = hino.data.split("-");
+        dataFormatada = `${dia}/${mes}/${ano}`;
+      }
+      if (!hinosPorData[dataFormatada]) {
+        hinosPorData[dataFormatada] = [];
+      }
       hinosPorData[dataFormatada].push({ ...hino, index });
     });
 
-    // Cria o container de datas (colunas)
-    const datasContainer = document.createElement("div");
-    datasContainer.classList.add("datas_container");
-
+    // Renderiza os grupos de datas
     Object.keys(hinosPorData).forEach(data => {
-      // Bloco da data (coluna)
+      // bloco da data
       const blocoData = document.createElement("div");
       blocoData.classList.add("grupo-data");
 
-      // Título da data
+      // título da data
       const titulo = document.createElement("h2");
       titulo.classList.add("titulo-data");
       titulo.textContent = data;
       blocoData.appendChild(titulo);
 
-      // Cards da data
+      // container dos cards
       const cardsWrapper = document.createElement("div");
       cardsWrapper.classList.add("cards_wrapper");
 
       hinosPorData[data].forEach(hino => {
-        // Criação do card
         const card = document.createElement("div");
         card.classList.add("card");
+
+        const grupoClass = `grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`;
+        card.classList.add(grupoClass);
+
         card.innerHTML = `
-          <div class="edit-btn" onclick="abrirModalEdicao(${hino.index})">✏️</div>
-          <div class="delete-btn" onclick="deletarHino(${hino.index})">🗑️</div>
-          <h3>Grupo: ${hino.grupo}</h3>
-          <p><strong>Nome do Hino:</strong> ${hino.nome}</p>
-          <p><strong>Tom:</strong> ${hino.tom}</p>
-          <p><strong>Atentem-se:</strong> ${hino.atentem}</p>
-          <a class="Card_link" href="${hino.link}" target="_blank">Assistir</a>
+          <button class="edit-btn" onclick="abrirModalEdicao(${hino.index})">✏️</button>
+          <button class="delete-btn" onclick="deletarHino(${hino.index})">🗑</button>
+          <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
+          <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
+          <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || ''}</p>
+          <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
+          <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
         `;
+
         cardsWrapper.appendChild(card);
       });
 
       blocoData.appendChild(cardsWrapper);
-      datasContainer.appendChild(blocoData);
+      container.appendChild(blocoData);
     });
-
-    container.appendChild(datasContainer);
 
     currentIndex = 0;
     atualizarCarrossel();
