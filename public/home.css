@@ -321,21 +321,19 @@ body {
 }
 
 .titulo-data {
-  text-align: center;
-  margin: 20px 0 10px;
-  color: #6a1b9a;
-  font-size: 1.3em;
+  font-size: 1.2rem;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .cards_wrapper {
   display: flex;
-  flex-direction: row; /* <-- MUDE para row */
-  gap: 15px;
+  flex-direction: row;   /* cards lado a lado */
+  flex-wrap: wrap;       /* quebra linha se tiver muitos */
   justify-content: center;
-  align-items: flex-start;
-  width: 100%;
+  gap: 15px;
 }
+
 
 .cards_wrapper .card {
   flex: 0 0 220px;
@@ -351,11 +349,8 @@ body {
 }
 
 .grupo-data {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   margin-bottom: 30px;
-  width: 100%;
+  text-align: center; /* centraliza a data */
 }
 
 @media (max-width: 400px) {
