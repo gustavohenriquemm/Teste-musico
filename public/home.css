@@ -19,61 +19,78 @@ body {
   margin: 3rem auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .Pagina001 {
   display: none;
 }
 
-/* ================== CARROSSEL ================== */
-.carousel-container {
+/* ================== CARDS AGRUPADOS POR DATA ================== */
+.datas_container {
+  display: flex;
+  flex-direction: column;   /* cada data em uma linha */
+  gap: 30px;
   width: 100%;
-  max-width: 500px;
-  margin: 2rem auto;
-  overflow: visible;
-  border-radius: 12px;
+  margin-top: 2rem;
 }
 
-.cards_container {
+.grupo-data {
   display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.titulo-data {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+.cards_wrapper {
+  display: flex;
+  flex-wrap: wrap;       /* quebra linha se tiver muitos */
+  justify-content: center;
+  gap: 15px;
 }
 
 .card {
   position: relative;
-  flex: 0 0 100%;
-  max-width: 100%;
+  flex: 0 0 220px;
+  max-width: 220px;
   min-height: 300px;
   border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 25px 15px 15px 15px; /* aumentei padding-top */
+  padding: 25px 15px 15px 15px;
   color: white;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
   background-size: cover;
   background-position: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Hover */
 .card:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
   box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
 
 .card h3 {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 8px;
-   margin-top: 40px; /* empurra o título para baixo do botão */
+  margin: 40px 0 8px 0; /* afasta do botão de edição */
 }
 
 .card p {
   font-size: 14px;
   line-height: 1.4;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 /* Link */
@@ -88,16 +105,11 @@ body {
   font-weight: bold;
   text-align: center;
 }
-
 .Card_link:hover {
   background: #3528ac;
 }
 
-.central_buton_lado {
-  padding-bottom: 1rem;
-}
-
-/* Botão deletar */
+/* ================== BOTÕES NO CARD ================== */
 .card .delete-btn {
   position: absolute;
   top: 10px;
@@ -112,69 +124,16 @@ body {
   justify-content: center;
   border-radius: 50%;
   font-size: 16px;
+  cursor: pointer;
 }
 .card .delete-btn:hover {
   background: darkred;
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.6);
-}
-
-.modal-content {
-  background-color: #fff;
-  margin: 10% auto;
-  padding: 20px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 400px;
-  position: relative;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.modal form label {
-  display: block;
-  margin-top: 10px;
-}
-
-.modal form input {
-  width: 100%;
-  padding: 5px;
-  margin-top: 3px;
-  box-sizing: border-box;
-}
-
-.modal form button {
-  margin-top: 15px;
-  padding: 10px;
-  width: 100%;
-  background-color: #4caf50;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-/* Botões no card */
 .card .edit-btn {
   position: absolute;
-  top: 5px; /* mais perto da borda */
-  left: 5px;
+  top: 10px;
+  left: 10px;
   z-index: 3;
   width: 28px;
   height: 28px;
@@ -185,6 +144,7 @@ body {
   background-color: #3948cf;
   color: #fff;
   font-size: 14px;
+  cursor: pointer;
 }
 
 /* ================== GRUPOS ================== */
@@ -201,42 +161,19 @@ body {
 .grupo_irmãs,
 .grupo_irmas {
   background: url("/img/Irmas.png") no-repeat center/cover;
-  background-color:rgba(233, 169, 169, 0.664) ;
+  background-color: rgba(233, 169, 169, 0.664);
   border: 2px solid #e91e63;
 }
 .grupo_varões,
 .grupo_varoes {
   background: url("/img/Varoes.png") no-repeat center/cover;
-  background-color:#5952b99d ;
+  background-color: #5952b99d;
   border: 2px solid #5952b9;
 }
 .grupo_grupo_de_louvor {
   background: url("/img/Grupo_louvor.png") no-repeat center/cover;
   background-color: #ec8e5780;
   border: 2px solid #f15900;
-}
-
-/* ================== BOTÕES DO CARROSSEL ================== */
-.central_buton_lado {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 1rem;
-}
-
-.carousel-btn {
-  background: #0f0852;
-  color: white;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  padding: 10px 15px;
-  border-radius: 12px;
-}
-
-.carousel-btn:hover {
-  background: #2516a7;
 }
 
 /* ================== CALENDÁRIO ================== */
@@ -248,7 +185,7 @@ body {
   border-radius: 10px;
   color: white;
   padding-bottom: 15px;
-  overflow-x: auto; /* permite rolar horizontalmente em telas pequenas */
+  overflow-x: auto;
 }
 
 .calendar header {
@@ -263,33 +200,27 @@ body {
   font-size: 1.3em;
 }
 
-
 .calendar table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* distribui as colunas igualmente */
+  table-layout: fixed;
 }
 .calendar th, .calendar td {
   text-align: center;
-  padding: 5px; /* diminui o padding para caber em telas pequenas */
-  word-wrap: break-word; /* quebra palavras grandes */
+  padding: 5px;
+  word-wrap: break-word;
   white-space: normal;
 }
-
-
 .calendar th {
-  font-size: 1rem; /* reduz fonte para caber */
+  font-size: 1rem;
   background: rgba(42,25,194,0.5);
 }
-
 .calendar td {
   font-size: 0.85em;
   cursor: pointer;
 }
-
 .calendar td:hover {
   background: rgba(209,231,221,0.5);
-  cursor: pointer;
 }
 .today {
   background: rgba(26,9,255,0.67);
@@ -298,12 +229,10 @@ body {
 
 /* ================== BOTÃO LIMPAR ================== */
 .container-botao {
-  display: none;
+  display: flex;
   justify-content: center;
   margin-top: 20px;
-
 }
-
 #limparTabela {
   background: linear-gradient(135deg, #6a5acd, #483d8b);
   color: white;
@@ -315,47 +244,71 @@ body {
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
-
 #limparTabela:hover {
   transform: translateY(-3px);
 }
 
-.titulo-data {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.cards_wrapper {
-  display: flex;
-  flex-direction: row;   /* cards lado a lado */
-  flex-wrap: wrap;       /* quebra linha se tiver muitos */
-  justify-content: center;
-  gap: 15px;
-}
-
-
-.cards_wrapper .card {
-  flex: 0 0 220px;
-  max-width: 220px;
+/* ================== MODAL ================== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
   width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
 }
-
-.datas_container {
-  display: flex;
-  flex-direction: column;   /* cada data em uma linha */
-  gap: 30px;
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+.modal form label {
+  display: block;
+  margin-top: 10px;
+}
+.modal form input {
   width: 100%;
+  padding: 5px;
+  margin-top: 3px;
+  box-sizing: border-box;
+}
+.modal form button {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  background-color: #4caf50;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-.grupo-data {
-  margin-bottom: 30px;
-  text-align: center; /* centraliza a data */
-}
-
+/* ================== RESPONSIVO ================== */
 @media (max-width: 400px) {
   .calendar th, .calendar td {
     padding: 4px;
     font-size: 0.8em;
+  }
+  .cards_wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    flex: 0 0 100%;
+    max-width: 90%;
   }
 }
