@@ -171,9 +171,6 @@ body {
   font-size: 16px;
 }
 
-
-
-
 /* Botões no card */
 .card .edit-btn {
   position: absolute;
@@ -364,6 +361,24 @@ body {
   flex: 0 0 250px;  /* largura fixa de cada card */
   max-width: 250px;
   width: 100%;
+}
+
+/* ================== NOVAS ESTILIZAÇÕES ================== */
+.datas_container {
+  display: flex;
+  flex-direction: row;      /* datas em colunas */
+  gap: 30px;                /* espaço entre as datas */
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  overflow-x: auto;         /* rolagem horizontal se necessário */
+}
+
+.grupo-data {
+  display: flex;
+  flex-direction: column;   /* título em cima, cards embaixo */
+  align-items: center;
+  min-width: 280px;         /* largura mínima de cada coluna */
 }
 
 @media (max-width: 400px) {
