@@ -353,21 +353,18 @@ body {
 
 .cards_wrapper {
   display: flex;
-  flex-direction: row;  /* deixa os cards na horizontal */
+  flex-direction: row;  /* cards na horizontal */
   flex-wrap: wrap;      /* quebra linha se passar do limite */
-  justify-content: center; 
+  justify-content: flex-start; /* começa da esquerda */
   gap: 15px;            /* espaço entre os cards */
+  align-items: stretch; /* altura igual */
 }
 
 .cards_wrapper .card {
   flex: 0 0 250px;  /* largura fixa de cada card */
-  max-width: 250px; /* limite */
+  max-width: 250px;
+  width: 100%;
 }
-
-
-
-
-
 
 @media (max-width: 400px) {
   .calendar th, .calendar td {
