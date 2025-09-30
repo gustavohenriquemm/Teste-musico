@@ -109,6 +109,26 @@ body {
   background: #3528ac;
 }
 
+.carousel-container {
+  width: 100%;
+  overflow-x: auto;          /* habilita rolagem horizontal */
+  scroll-behavior: smooth;   /* rolagem suave */
+  -webkit-overflow-scrolling: touch; /* melhor no iOS */
+}
+
+.cards_container {
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+}
+.carousel-container {
+  scroll-snap-type: x mandatory; 
+}
+
+.card {
+  scroll-snap-align: start;
+}
+
 /* ================== BOTÕES NO CARD ================== */
 .card .delete-btn {
   position: absolute;
@@ -304,11 +324,11 @@ body {
     font-size: 0.8em;
   }
   .cards_wrapper {
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;      /* mantém a quebra automática */
+    justify-content: center;
   }
   .card {
-    flex: 0 0 100%;
-    max-width: 90%;
+    flex: 0 0 45%;        /* ocupa 45% da largura, cabem 2 por linha */
+    max-width: 45%;
   }
 }
