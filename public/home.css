@@ -38,93 +38,106 @@ body {
 .grupo-data {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
+  position: relative; /* permite botões de navegação */
+  margin-bottom: 30px;
 }
 
 .titulo-data {
   font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  margin-left: 5px;
   color: #fff;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
 }
 
-/* container que permite arrastar no dedo */
-.carousel-container {
-  width: 100%;
-  overflow-x: auto;          
+/* ================== CARDS HORIZONTAIS ================== */
+.cards_wrapper {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;         /* scroll lateral */
   scroll-behavior: smooth;   
   -webkit-overflow-scrolling: touch; 
   scroll-snap-type: x mandatory;     
-}
-.carousel-container::-webkit-scrollbar {
-  display: none; 
+  padding: 10px 0;
 }
 
-.cards_container {
-  display: flex;
-  flex-wrap: nowrap; /* impede quebra de linha */
-  gap: 15px;
-  padding: 10px;
+.cards_wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.cards_wrapper::-webkit-scrollbar-thumb {
+  background: rgba(106, 27, 154, 0.7);
+  border-radius: 4px;
 }
 
+/* ================== CARD ================== */
 .card {
-  position: relative;
-  flex: 0 0 auto;         
-  min-width: 220px;       
+  flex: 0 0 220px;       /* largura fixa */
   max-width: 250px;
-  min-height: 300px;
+  min-height: 280px;
   border-radius: 12px;
   overflow: hidden;
+  padding: 20px 15px 15px;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 25px 15px 15px 15px;
-  color: white;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
   background-size: cover;
   background-position: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  scroll-snap-align: start; 
+  scroll-snap-align: start;
 }
 
-
 /* ================== BOTÕES NO CARD ================== */
+.card .edit-btn,
 .card .delete-btn {
   position: absolute;
   top: 10px;
-  right: 10px;
-  background-color: red;
-  color: #fff;
-  z-index: 3;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 16px;
+  border: none;
   cursor: pointer;
-}
-.card .delete-btn:hover {
-  background: darkred;
+  border-radius: 50%;
+  z-index: 5;
 }
 
 .card .edit-btn {
-  position: absolute;
-  top: 10px;
   left: 10px;
-  z-index: 3;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
   background-color: #3948cf;
   color: #fff;
-  font-size: 14px;
+  width: 28px;
+  height: 28px;
+}
+
+.card .delete-btn {
+  right: 10px;
+  background-color: red;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+}
+
+/* ================== BOTÕES DE NAVEGAÇÃO ================== */
+.cards_nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.cards_nav button {
+  background: rgba(106, 27, 154, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
   cursor: pointer;
+}
+.cards_nav button:hover {
+  background: rgba(72, 61, 139, 0.9);
 }
 
 /* ================== GRUPOS ================== */
@@ -276,34 +289,3 @@ body {
   cursor: pointer;
   font-size: 16px;
 }
-
-/* Navegação específica para cada grupo de cards */
-.grupo-data {
-  position: relative; /* para posicionar os botões de navegação */
-}
-
-.cards_nav {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  gap: 6px;
-  z-index: 5;
-}
-
-.cards_nav button {
-  background: rgba(106, 27, 154, 0.8);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  font-size: 16px;
-  cursor: pointer;
-}
-.cards_nav button:hover {
-  background: rgba(72, 61, 139, 0.9);
-}
-
-
-
