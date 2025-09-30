@@ -135,6 +135,15 @@ async function carregarHinos() {
 
       // pega o wrapper da data existente
       const cardsWrapper = blocoData.querySelector(".cards_wrapper");
+      const btnPrev = blocoData.querySelector(".cards_prev");
+      const btnNext = blocoData.querySelector(".cards_next");
+
+      btnPrev.addEventListener("click", () => {
+        cardsWrapper.scrollBy({ left: -220, behavior: "smooth" });
+      });
+      btnNext.addEventListener("click", () => {
+        cardsWrapper.scrollBy({ left: 220, behavior: "smooth" });
+      });
 
       hinosPorData[data].forEach(hino => {
         const card = document.createElement("div");
@@ -334,6 +343,32 @@ btnNext.addEventListener("click", () => {
   currentIndex = (currentIndex + 1) % cards.length;
   atualizarCarrossel();
 });
+// Adiciona os botões de navegação apenas se ainda não existirem
+let nav = blocoData.querySelector(".cards_nav");
+if (!nav) {
+  nav = document.createElement("div");
+  nav.classList.add("cards_nav");
+
+  const btnPrev = document.createElement("button");
+  btnPrev.innerHTML = "&#9664;"; // seta esquerda
+  const btnNext = document.createElement("button");
+  btnNext.innerHTML = "&#9654;"; // seta direita
+
+  nav.appendChild(btnPrev);
+  nav.appendChild(btnNext);
+  blocoData.appendChild(nav);
+
+  // Scroll horizontal do wrapper
+  btnPrev.addEventListener("click", () => {
+    cardsWrapper.scrollBy({ left: -220, behavior: "smooth" });
+  });
+  btnNext.addEventListener("click", () => {
+    cardsWrapper.scrollBy({ left: 220, behavior: "smooth" });
+  });
+}
+
+
+
   </script>
 </body>
 </html>
