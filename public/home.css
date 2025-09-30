@@ -38,7 +38,6 @@ body {
 .grupo-data {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 15px;
 }
 
@@ -50,17 +49,30 @@ body {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
 }
 
-.cards_wrapper {
+/* container que permite arrastar no dedo */
+.carousel-container {
+  width: 100%;
+  overflow-x: auto;          
+  scroll-behavior: smooth;   
+  -webkit-overflow-scrolling: touch; 
+  scroll-snap-type: x mandatory;     
+}
+.carousel-container::-webkit-scrollbar {
+  display: none; 
+}
+
+.cards_container {
   display: flex;
-  flex-wrap: wrap;       /* quebra linha se tiver muitos */
-  justify-content: center;
+  flex-wrap: nowrap; /* impede quebra de linha */
   gap: 15px;
+  padding: 10px;
 }
 
 .card {
   position: relative;
-  flex: 0 0 220px;
-  max-width: 220px;
+  flex: 0 0 auto;         
+  min-width: 220px;       
+  max-width: 250px;
   min-height: 300px;
   border-radius: 12px;
   overflow: hidden;
@@ -73,61 +85,9 @@ body {
   background-size: cover;
   background-position: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  scroll-snap-align: start; 
 }
 
-/* Hover */
-.card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-}
-
-.card h3 {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 40px 0 8px 0; /* afasta do botão de edição */
-}
-
-.card p {
-  font-size: 14px;
-  line-height: 1.4;
-  margin-bottom: 8px;
-}
-
-/* Link */
-.Card_link {
-  display: inline-block;
-  margin-top: auto;
-  padding: 8px 12px;
-  background: #4f59af;
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  text-align: center;
-}
-.Card_link:hover {
-  background: #3528ac;
-}
-
-.carousel-container {
-  width: 100%;
-  overflow-x: auto;          /* habilita rolagem horizontal */
-  scroll-behavior: smooth;   /* rolagem suave */
-  -webkit-overflow-scrolling: touch; /* melhor no iOS */
-}
-
-.cards_container {
-  display: flex;
-  gap: 15px;
-  padding: 10px;
-}
-.carousel-container {
-  scroll-snap-type: x mandatory; 
-}
-
-.card {
-  scroll-snap-align: start;
-}
 
 /* ================== BOTÕES NO CARD ================== */
 .card .delete-btn {
