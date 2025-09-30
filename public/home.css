@@ -14,9 +14,9 @@ body {
 
 /* ================== CENTRAL ================== */
 .central {
-  width: 95%;
-  max-width: 480px; /* largura ideal para celulares */
-  margin: 2rem auto;
+  width: 90%;
+  max-width: 1200px;
+  margin: 3rem auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,97 +29,76 @@ body {
 /* ================== CARDS AGRUPADOS POR DATA ================== */
 .datas_container {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex-direction: column;   /* cada data em uma linha */
+  gap: 30px;
   width: 100%;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 
 .grupo-data {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
 }
 
 .titulo-data {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: #fff;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
 }
 
-/* ================== CARROSSEL ================== */
+/* container que permite arrastar no dedo */
 .carousel-container {
   width: 100%;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
+  overflow-x: auto;          
+  scroll-behavior: smooth;   
+  -webkit-overflow-scrolling: touch; 
+  scroll-snap-type: x mandatory;     
 }
-
 .carousel-container::-webkit-scrollbar {
-  display: none;
+  display: none; 
 }
 
 .cards_container {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 10px;
-  padding: 8px;
+  flex-wrap: nowrap; /* impede quebra de linha */
+  gap: 15px;
+  padding: 10px;
 }
 
 .card {
   position: relative;
-  flex: 0 0 auto;
-  min-width: 180px;
-  max-width: 220px;
-  min-height: 260px;
-  border-radius: 10px;
+  flex: 0 0 auto;         
+  min-width: 220px;       
+  max-width: 250px;
+  min-height: 300px;
+  border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 20px 12px 12px 12px;
+  padding: 25px 15px 15px 15px;
   color: white;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
   background-size: cover;
   background-position: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  scroll-snap-align: start;
-}
-/* ================== WRAPPER DOS CARDS POR DATA ================== */
-.cards_wrapper {
-  display: flex;        /* coloca os cards na horizontal */
-  flex-wrap: nowrap;    /* não quebra para a linha de baixo */
-  gap: 10px;            /* espaçamento entre cards */
-  overflow-x: auto;     /* permite rolagem horizontal se não couber */
-  padding-bottom: 8px;
-}
-
-.cards_wrapper::-webkit-scrollbar {
-  display: none; /* oculta a barra de rolagem no mobile */
-}
-
-/* Para garantir que cada grupo-data fique separado verticalmente */
-.grupo-data {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 15px; /* separação entre datas */
+  scroll-snap-align: start; 
 }
 
 
 /* ================== BOTÕES NO CARD ================== */
 .card .delete-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 36px;
-  height: 36px;
+  top: 10px;
+  right: 10px;
   background-color: red;
   color: #fff;
   z-index: 3;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,17 +112,17 @@ body {
 
 .card .edit-btn {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  width: 32px;
-  height: 32px;
-  background-color: #3948cf;
-  color: #fff;
+  top: 10px;
+  left: 10px;
   z-index: 3;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  background-color: #3948cf;
+  color: #fff;
   font-size: 14px;
   cursor: pointer;
 }
@@ -151,41 +130,41 @@ body {
 /* ================== GRUPOS ================== */
 .grupo_mocidade {
   background: url("/img/IMG mocidade.png") no-repeat center/cover;
-  background-color: rgba(15,8,82,0.7);
+  background-color: #0f0852b2;
   border: 2px solid #2196f3;
 }
 .grupo_adolescentes {
   background: url("/img/Adolecentes.png") no-repeat center/cover;
-  background-color: rgba(0,0,0,0.45);
-  border: 2px solid #000;
+  background-color: rgba(0, 0, 0, 0.438);
+  border: 2px solid #000000;
 }
 .grupo_irmãs,
 .grupo_irmas {
   background: url("/img/Irmas.png") no-repeat center/cover;
-  background-color: rgba(233,169,169,0.66);
+  background-color: rgba(233, 169, 169, 0.664);
   border: 2px solid #e91e63;
 }
 .grupo_varões,
 .grupo_varoes {
   background: url("/img/Varoes.png") no-repeat center/cover;
-  background-color: rgba(89,82,185,0.62);
+  background-color: #5952b99d;
   border: 2px solid #5952b9;
 }
 .grupo_grupo_de_louvor {
   background: url("/img/Grupo_louvor.png") no-repeat center/cover;
-  background-color: rgba(236,142,87,0.5);
+  background-color: #ec8e5780;
   border: 2px solid #f15900;
 }
 
 /* ================== CALENDÁRIO ================== */
 .calendar {
   width: 100%;
-  max-width: 100%;
-  margin: 1rem auto;
+  max-width: 500px;
+  margin: 0 auto;
   background: rgba(42,25,194,0.28);
   border-radius: 10px;
   color: white;
-  padding-bottom: 12px;
+  padding-bottom: 15px;
   overflow-x: auto;
 }
 
@@ -194,11 +173,11 @@ body {
   justify-content: space-between;
   align-items: center;
   background: rgba(42,25,194,0.5);
-  padding: 12px;
+  padding: 15px;
 }
 
 .calendar header h2 {
-  font-size: 1.1rem;
+  font-size: 1.3em;
 }
 
 .calendar table {
@@ -206,28 +185,23 @@ body {
   border-collapse: collapse;
   table-layout: fixed;
 }
-
 .calendar th, .calendar td {
   text-align: center;
-  padding: 4px;
+  padding: 5px;
   word-wrap: break-word;
   white-space: normal;
 }
-
 .calendar th {
-  font-size: 0.9rem;
+  font-size: 1rem;
   background: rgba(42,25,194,0.5);
 }
-
 .calendar td {
-  font-size: 0.8rem;
+  font-size: 0.85em;
   cursor: pointer;
 }
-
 .calendar td:hover {
   background: rgba(209,231,221,0.5);
 }
-
 .today {
   background: rgba(26,9,255,0.67);
   border-radius: 50%;
@@ -237,23 +211,21 @@ body {
 .container-botao {
   display: flex;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 20px;
 }
-
 #limparTabela {
   background: linear-gradient(135deg, #6a5acd, #483d8b);
   color: white;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
-  padding: 8px 20px;
+  padding: 10px 25px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
-
 #limparTabela:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 /* ================== MODAL ================== */
@@ -268,46 +240,41 @@ body {
   overflow: auto;
   background-color: rgba(0,0,0,0.6);
 }
-
 .modal-content {
   background-color: #fff;
-  margin: 8% auto;
-  padding: 15px;
+  margin: 10% auto;
+  padding: 20px;
   border-radius: 10px;
   width: 90%;
-  max-width: 380px;
+  max-width: 400px;
   position: relative;
 }
-
 .close-btn {
   position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 22px;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
   cursor: pointer;
 }
-
 .modal form label {
   display: block;
-  margin-top: 8px;
+  margin-top: 10px;
 }
-
 .modal form input {
   width: 100%;
   padding: 5px;
   margin-top: 3px;
   box-sizing: border-box;
 }
-
 .modal form button {
-  margin-top: 12px;
-  padding: 8px;
+  margin-top: 15px;
+  padding: 10px;
   width: 100%;
   background-color: #4caf50;
   border: none;
   color: #fff;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* Navegação específica para cada grupo de cards */
@@ -337,3 +304,6 @@ body {
 .cards_nav button:hover {
   background: rgba(72, 61, 139, 0.9);
 }
+
+
+

@@ -38,9 +38,6 @@
         </table>
       </div>
 
-
-    
-
     <!-- Carrossel de hinos -->
     <div class="carousel-container">
       <div class="cards_container" id="cardsHinos"></div>
@@ -52,41 +49,40 @@
     </div>
 
     <!-- Modal de Edição -->
-<div id="editModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn">&times;</span>
-    <h2>Editar Hino</h2>
-    <form id="editForm">
-      <label>Grupo:</label>
-      <input type="text" name="grupo" required>
-      
-      <label>Data:</label>
-      <input type="date" name="data" required>
-      
-      <label>Nome:</label>
-      <input type="text" name="nome" required>
-      
-      <label>Link:</label>
-      <input type="url" name="link">
-      
-      <label>Tom:</label>
-      <input type="text" name="tom">
-      
-      <label>Atentem-se:</label>
-      <input type="text" name="atentem">
-      
-      <button type="submit">Salvar Alterações</button>
-    </form>
-  </div>
-</div>
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Editar Hino</h2>
+        <form id="editForm">
+          <label>Grupo:</label>
+          <input type="text" name="grupo" required>
+          
+          <label>Data:</label>
+          <input type="date" name="data" required>
+          
+          <label>Nome:</label>
+          <input type="text" name="nome" required>
+          
+          <label>Link:</label>
+          <input type="url" name="link">
+          
+          <label>Tom:</label>
+          <input type="text" name="tom">
+          
+          <label>Atentem-se:</label>
+          <input type="text" name="atentem">
+          
+          <button type="submit">Salvar Alterações</button>
+        </form>
+      </div>
+    </div>
 
   </section>
 
-  <script>
-// ---------------- CARDS DE HINOS ----------------
-let currentIndex = 0;
-let hinoAtualIndex = null; // índice do hino que está sendo editado
+<script>
+let hinoAtualIndex = null;
 
+// ---------------- CARDS DE HINOS ----------------
 async function carregarHinos() {
   try {
     const res = await fetch('/api/hino');
@@ -97,46 +93,36 @@ async function carregarHinos() {
     // Agrupa os hinos por data
     const hinosPorData = {};
     hinos.forEach((hino, index) => {
-      let dataFormatada = hino.data;
-      if (dataFormatada.includes("-")) {
-        const [ano, mes, dia] = hino.data.split("-");
-        dataFormatada = `${dia}/${mes}/${ano}`;
-      }
-      if (!hinosPorData[dataFormatada]) {
-        hinosPorData[dataFormatada] = [];
-      }
+      const dataFormatada = hino.data.includes("-") ? hino.data.split("-").reverse().join("/") : hino.data;
+      if (!hinosPorData[dataFormatada]) hinosPorData[dataFormatada] = [];
       hinosPorData[dataFormatada].push({ ...hino, index });
     });
 
-    // Renderiza os grupos de datas
+    // Renderiza grupos de datas
     Object.keys(hinosPorData).forEach(data => {
-      // 🔎 Verifica se já existe um grupo para essa data
-      let blocoData = container.querySelector(`.grupo-data[data-data="${data}"]`);
+      const blocoData = document.createElement("div");
+      blocoData.classList.add("grupo-data");
+      blocoData.setAttribute("data-data", data);
 
-      if (!blocoData) {
-        // bloco da data
-        blocoData = document.createElement("div");
-        blocoData.classList.add("grupo-data");
-        blocoData.setAttribute("data-data", data);
+      // Título da data
+      const titulo = document.createElement("h2");
+      titulo.classList.add("titulo-data");
+      titulo.textContent = data;
+      blocoData.appendChild(titulo);
 
-        // título da data
-        const titulo = document.createElement("h2");
-        titulo.classList.add("titulo-data");
-        titulo.textContent = data;
-        blocoData.appendChild(titulo);
+      // Wrapper dos cards
+      const cardsWrapper = document.createElement("div");
+      cardsWrapper.classList.add("cards_wrapper");
+      blocoData.appendChild(cardsWrapper);
 
-        // container dos cards
-        const cardsWrapper = document.createElement("div");
-        cardsWrapper.classList.add("cards_wrapper");
+      // Botões de navegação
+      const nav = document.createElement("div");
+      nav.classList.add("cards_nav");
 
-        blocoData.appendChild(cardsWrapper);
-        container.appendChild(blocoData);
-      }
-
-      // pega o wrapper da data existente
-      const cardsWrapper = blocoData.querySelector(".cards_wrapper");
-      const btnPrev = blocoData.querySelector(".cards_prev");
-      const btnNext = blocoData.querySelector(".cards_next");
+      const btnPrev = document.createElement("button");
+      btnPrev.innerHTML = "&#9664;";
+      const btnNext = document.createElement("button");
+      btnNext.innerHTML = "&#9654;";
 
       btnPrev.addEventListener("click", () => {
         cardsWrapper.scrollBy({ left: -220, behavior: "smooth" });
@@ -145,12 +131,15 @@ async function carregarHinos() {
         cardsWrapper.scrollBy({ left: 220, behavior: "smooth" });
       });
 
+      nav.appendChild(btnPrev);
+      nav.appendChild(btnNext);
+      blocoData.appendChild(nav);
+
+      // Adiciona os cards
       hinosPorData[data].forEach(hino => {
         const card = document.createElement("div");
         card.classList.add("card");
-
-        const grupoClass = `grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`;
-        card.classList.add(grupoClass);
+        card.classList.add(`grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`);
 
         card.innerHTML = `
           <button class="edit-btn" onclick="abrirModalEdicao(${hino.index})">✏️</button>
@@ -161,41 +150,18 @@ async function carregarHinos() {
           <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
           <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
         `;
-
         cardsWrapper.appendChild(card);
       });
-    });
 
-    currentIndex = 0;
-    atualizarCarrossel();
+      container.appendChild(blocoData);
+    });
 
   } catch (err) {
     console.error("Erro ao carregar hinos:", err);
   }
 }
 
-
-carregarHinos();
-
-// Atualiza posição do carrossel
-function atualizarCarrossel() {
-  const container = document.querySelector(".cards_container");
-  container.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
-
-// Limpar todos os hinos
-document.getElementById("limparTabela").addEventListener("click", async () => {
-  try {
-    await fetch('/api/hino', { method: 'DELETE' });
-    carregarHinos();
-    alert("Cards de hinos limpos com sucesso!");
-  } catch (err) {
-    console.error(err);
-    alert("Erro ao limpar cards!");
-  }
-});
-
-// Deletar hino individual
+// ---------------- DELETAR ----------------
 async function deletarHino(index) {
   if (!confirm("Deseja realmente excluir este hino?")) return;
   try {
@@ -212,7 +178,19 @@ async function deletarHino(index) {
   }
 }
 
-// ----------- MODAL DE EDIÇÃO -----------
+// ---------------- LIMPAR ----------------
+document.getElementById("limparTabela").addEventListener("click", async () => {
+  try {
+    await fetch('/api/hino', { method: 'DELETE' });
+    carregarHinos();
+    alert("Cards de hinos limpos com sucesso!");
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao limpar cards!");
+  }
+});
+
+// ---------------- MODAL DE EDIÇÃO ----------------
 const editModal = document.getElementById("editModal");
 const editForm = document.getElementById("editForm");
 const closeBtn = document.querySelector(".close-btn");
@@ -224,27 +202,21 @@ function abrirModalEdicao(index) {
     .then(hinos => {
       const hino = hinos[index];
       if (!hino) return alert("Hino não encontrado!");
-
-      // Preenche o formulário
       editForm.grupo.value = hino.grupo || '';
       editForm.data.value = hino.data || '';
       editForm.nome.value = hino.nome || '';
       editForm.link.value = hino.link || '';
       editForm.tom.value = hino.tom || '';
       editForm.atentem.value = hino.atentem || '';
-
-      // Mostra o modal
       editModal.style.display = "block";
     });
 }
 
-// Fecha o modal
 closeBtn.onclick = () => editModal.style.display = "none";
 window.onclick = (event) => {
   if (event.target == editModal) editModal.style.display = "none";
-}
+};
 
-// Salvar alterações do modal
 editForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const dadosAtualizados = {
@@ -255,7 +227,6 @@ editForm.addEventListener("submit", (e) => {
     tom: editForm.tom.value,
     atentem: editForm.atentem.value
   };
-
   fetch(`/api/hino/${hinoAtualIndex}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -276,8 +247,7 @@ editForm.addEventListener("submit", (e) => {
   });
 });
 
-// ----------- CALENDÁRIO -----------
-// (seu código do calendário permanece igual)
+// ---------------- CALENDÁRIO ----------------
 const monthYear = document.getElementById("monthYear");
 const calendarBody = document.getElementById("calendarBody");
 const prevBtn = document.getElementById("prev");
@@ -317,6 +287,7 @@ function renderCalendar(date) {
 
   if(row.children.length > 0) calendarBody.appendChild(row);
 }
+
 prevBtn.addEventListener("click", () => {
   currentDate.setMonth(currentDate.getMonth() - 1);
   renderCalendar(currentDate);
@@ -325,50 +296,9 @@ nextBtn.addEventListener("click", () => {
   currentDate.setMonth(currentDate.getMonth() + 1);
   renderCalendar(currentDate);
 });
+
 renderCalendar(currentDate);
-
-// ----------- CONTROLES DO CARROSSEL -----------
-const btnPrev = document.getElementById("btnPrev");
-const btnNext = document.getElementById("btnNext");
-
-btnPrev.addEventListener("click", () => {
-  const cards = document.querySelectorAll(".card");
-  if (cards.length === 0) return;
-  currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-  atualizarCarrossel();
-});
-btnNext.addEventListener("click", () => {
-  const cards = document.querySelectorAll(".card");
-  if (cards.length === 0) return;
-  currentIndex = (currentIndex + 1) % cards.length;
-  atualizarCarrossel();
-});
-// Adiciona os botões de navegação apenas se ainda não existirem
-let nav = blocoData.querySelector(".cards_nav");
-if (!nav) {
-  nav = document.createElement("div");
-  nav.classList.add("cards_nav");
-
-  const btnPrev = document.createElement("button");
-  btnPrev.innerHTML = "&#9664;"; // seta esquerda
-  const btnNext = document.createElement("button");
-  btnNext.innerHTML = "&#9654;"; // seta direita
-
-  nav.appendChild(btnPrev);
-  nav.appendChild(btnNext);
-  blocoData.appendChild(nav);
-
-  // Scroll horizontal do wrapper
-  btnPrev.addEventListener("click", () => {
-    cardsWrapper.scrollBy({ left: -220, behavior: "smooth" });
-  });
-  btnNext.addEventListener("click", () => {
-    cardsWrapper.scrollBy({ left: 220, behavior: "smooth" });
-  });
-}
-
-
-
-  </script>
+carregarHinos();
+</script>
 </body>
 </html>
