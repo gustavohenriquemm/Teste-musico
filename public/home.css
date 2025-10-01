@@ -35,36 +35,29 @@ body {
   margin-top: 1rem;
 }
 
+/* Cada bloco de data é independente */
 .grupo-data {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  position: relative;
- 
- 
-  margin-bottom: 50px;  /* separa bastante uma data da outra */
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255,255,255,0.2); /* linha discreta de divisão */
+  width: 100%;
+  margin: 40px 0;          /* separação entre datas */
+  display: block;          /* força a quebrar linha */
 }
 
 
+/* O título da data em cima */
 .titulo-data {
-  font-size: 1rem;
-  font-weight: bold;
-  margin-left: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
   color: #fff;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
 }
 
 /* ================== CARDS HORIZONTAIS ================== */
 .cards_wrapper {
   display: flex;
-  gap: 10px;
-  overflow-x: auto;
+  gap: 15px;
+  overflow-x: auto;       /* scroll horizontal dentro da data */
+  padding: 10px;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  padding: 8px 0;
 }
 
 .cards_wrapper::-webkit-scrollbar {
@@ -126,9 +119,9 @@ body {
 /* ================== BOTÕES DE NAVEGAÇÃO ================== */
 .cards_nav {
   display: flex;
-  justify-content: center; /* centralizado no celular */
-  gap: 12px;
-  margin-top: 6px;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
 }
 
 .cards_nav button {
