@@ -100,6 +100,7 @@ async function carregarHinos() {
 
     // Renderiza grupos de datas
     Object.keys(hinosPorData).forEach(data => {
+      // Bloco por data
       const blocoData = document.createElement("div");
       blocoData.classList.add("grupo-data");
       blocoData.setAttribute("data-data", data);
@@ -110,12 +111,12 @@ async function carregarHinos() {
       titulo.textContent = data;
       blocoData.appendChild(titulo);
 
-      // Wrapper dos cards
+      // Container de cards
       const cardsWrapper = document.createElement("div");
       cardsWrapper.classList.add("cards_wrapper");
       blocoData.appendChild(cardsWrapper);
 
-      // Botões de navegação
+      // Botões de navegação (individuais para cada data)
       const nav = document.createElement("div");
       nav.classList.add("cards_nav");
 
@@ -153,6 +154,7 @@ async function carregarHinos() {
         cardsWrapper.appendChild(card);
       });
 
+      // Adiciona o grupo de data no container principal
       container.appendChild(blocoData);
     });
 
@@ -160,6 +162,7 @@ async function carregarHinos() {
     console.error("Erro ao carregar hinos:", err);
   }
 }
+
 
 // ---------------- DELETAR ----------------
 async function deletarHino(index) {
