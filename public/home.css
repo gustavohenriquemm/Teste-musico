@@ -70,8 +70,8 @@ body {
 
 /* ================== CARD ================== */
 .card {
-  flex: 0 0 160px;  /* menor largura padrão p/ celular */
-  max-width: 180px;
+  flex: 0 0 300px;  /* largura fixa 300px */
+  max-width: 300px; /* garante que não ultrapasse 300px */
   min-height: 220px;
   border-radius: 10px;
   padding: 15px;
@@ -146,7 +146,7 @@ body {
   border: 2px solid #2196f3;
 }
 .grupo_adolescentes {
-  background: url("/img/Adolecentes.png") no-repeat center/cover;
+  background: url(/public/img/Adolecentes.png) no-repeat center/cover;
   background-color: rgba(0, 0, 0, 0.438);
   border: 2px solid #000000;
 }
@@ -163,7 +163,7 @@ body {
   border: 2px solid #5952b9;
 }
 .grupo_grupo_de_louvor {
-  background: url("/img/Grupo_louvor.png") no-repeat center/cover;
+  background: url(/public/img/Grupo_louvor.png) no-repeat center/cover;
   background-color: #ec8e5780;
   border: 2px solid #f15900;
 }

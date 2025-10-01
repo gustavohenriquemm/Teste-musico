@@ -206,22 +206,30 @@ document.getElementById("limparTabela").addEventListener("click", async () => {
 const editModal = document.getElementById("editModal");
 const editForm = document.getElementById("editForm");
 const closeBtn = document.querySelector(".close-btn");
+let hinoAtualID = null; // agora usamos o ID real
 
-function abrirModalEdicao(index) {
-  hinoAtualIndex = index;
-  fetch('/api/hino')
-    .then(res => res.json())
-    .then(hinos => {
-      const hino = hinos[index];
-      if (!hino) return alert("Hino não encontrado!");
-      editForm.grupo.value = hino.grupo || '';
-      editForm.data.value = hino.data || '';
-      editForm.nome.value = hino.nome || '';
-      editForm.link.value = hino.link || '';
-      editForm.tom.value = hino.tom || '';
-      editForm.atentem.value = hino.atentem || '';
-      editModal.style.display = "block";
-    });
+// abrir modal e preencher dados
+async function abrirModalEdicao(index) {
+  try {
+    const res = await fetch('/api/hino');
+    const hinos = await res.json();
+    const hino = hinos[index];
+    if (!hino) return alert("Hino não encontrado!");
+    
+    hinoAtualID = hino.id || index; // usa ID real se existir
+
+    editForm.grupo.value = hino.grupo || '';
+    editForm.data.value = hino.data || '';
+    editForm.nome.value = hino.nome || '';
+    editForm.link.value = hino.link || '';
+    editForm.tom.value = hino.tom || '';
+    editForm.atentem.value = hino.atentem || '';
+
+    editModal.style.display = "block";
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao carregar hino para edição!");
+  }
 }
 
 closeBtn.onclick = () => editModal.style.display = "none";
@@ -229,8 +237,12 @@ window.onclick = (event) => {
   if (event.target == editModal) editModal.style.display = "none";
 };
 
-editForm.addEventListener("submit", (e) => {
+// submit do formulário
+editForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  if (!hinoAtualID) return alert("Hino não selecionado!");
+
   const dadosAtualizados = {
     grupo: editForm.grupo.value,
     data: editForm.data.value,
@@ -239,25 +251,28 @@ editForm.addEventListener("submit", (e) => {
     tom: editForm.tom.value,
     atentem: editForm.atentem.value
   };
-  fetch(`/api/hino/${hinoAtualIndex}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(dadosAtualizados)
-  })
-  .then(res => {
-    if(res.ok){
+
+  try {
+    const res = await fetch(`/api/hino/${hinoAtualID}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dadosAtualizados)
+    });
+
+    if (res.ok) {
       alert("Hino atualizado com sucesso!");
-      carregarHinos();
       editModal.style.display = "none";
+      carregarHinos();
     } else {
-      alert("Erro ao atualizar hino!");
+      const erro = await res.text();
+      alert("Erro ao atualizar hino! " + erro);
     }
-  })
-  .catch(err => {
+  } catch (err) {
     console.error(err);
     alert("Erro na conexão ao atualizar hino!");
-  });
+  }
 });
+
 
 // ---------------- CALENDÁRIO ----------------
 const monthYear = document.getElementById("monthYear");
