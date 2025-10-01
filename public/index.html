@@ -15,6 +15,16 @@
     <!-- Link para o formulário -->
     <a class="Pagina001" href="Formulario.html">Página 2</a>
 
+    <!-- POPUP DE BOAS-VINDAS -->
+      <div id="welcomeModal" class="modal">
+        <div class="modal-content popup-welcome">
+          <h2>Olá!</h2>
+          <p>Deseja ver os hinos do congresso da cidade?</p>
+          <button id="verHinosBtn">Sim, quero ver!</button>
+          <button id="fecharPopupBtn">Não, obrigado</button>
+        </div>
+      </div>
+
     <!-- Calendário -->
     <div class="calendar">
         <header>
@@ -80,6 +90,29 @@
   </section>
 
 <script>
+  // POPUP DE BOAS-VINDAS
+const welcomeModal = document.getElementById("welcomeModal");
+const verHinosBtn = document.getElementById("verHinosBtn");
+const fecharPopupBtn = document.getElementById("fecharPopupBtn");
+
+// Mostrar popup apenas na primeira visita
+if (!localStorage.getItem("popupShown")) {
+  welcomeModal.classList.add("show");
+}
+
+// Botão "Sim"
+verHinosBtn.addEventListener("click", () => {
+  localStorage.setItem("popupShown", "true");
+  window.location.href = "public/hinos_congresso.html"; // agora aponta para a pasta correta
+
+});
+
+// Botão "Não"
+fecharPopupBtn.addEventListener("click", () => {
+  localStorage.setItem("popupShown", "true");
+  welcomeModal.classList.remove("show");
+});
+
 let hinoAtualIndex = null;
 
 // ---------------- CARDS DE HINOS ----------------
