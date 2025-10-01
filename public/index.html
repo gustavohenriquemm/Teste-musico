@@ -99,7 +99,16 @@ async function carregarHinos() {
     });
 
     // Renderiza grupos de datas
-    Object.keys(hinosPorData).forEach(data => {
+    // Renderiza grupos de datas (ordenadas)
+Object.keys(hinosPorData)
+  .sort((a, b) => {
+    // converte "dd/mm/yyyy" para Date p/ ordenar
+    const [da, ma, ya] = a.split("/");
+    const [db, mb, yb] = b.split("/");
+    return new Date(ya, ma - 1, da) - new Date(yb, mb - 1, db);
+  })
+  .forEach(data => {
+
       // Bloco por data
       const blocoData = document.createElement("div");
       blocoData.classList.add("grupo-data");

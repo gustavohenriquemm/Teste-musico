@@ -40,7 +40,13 @@ body {
   flex-direction: column;
   gap: 8px;
   position: relative;
+ 
+ 
+  margin-bottom: 50px;  /* separa bastante uma data da outra */
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.2); /* linha discreta de divisão */
 }
+
 
 .titulo-data {
   font-size: 1rem;
