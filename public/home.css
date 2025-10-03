@@ -70,8 +70,8 @@ body {
 
 /* ================== CARD ================== */
 .card {
-  flex: 0 0 350px;           /* aumenta a largura do card */
-  max-width: 350px;          /* aumenta a largura máxima */
+  flex: 0 0 550px;           /* aumenta a largura do card */
+  max-width: 450px;          /* aumenta a largura máxima */
   min-height: 320px;         /* opcional: aumenta altura */
   border-radius: 10px;
   padding: 20px;             /* mais espaço interno */
