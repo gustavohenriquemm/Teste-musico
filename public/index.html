@@ -185,8 +185,8 @@ Object.keys(hinosPorData)
         card.classList.add(`grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`);
 
         card.innerHTML = `
-          <button class="edit-btn" onclick="abrirModalEdicao(${hino.index})">✏️</button>
-          <button class="delete-btn" onclick="deletarHino(${hino.index})">🗑</button>
+          <button class="edit-btn" onclick="abrirModalEdicao(${hino.id})">✏️</button>
+          <button class="delete-btn" onclick="deletarHino(${hino.id})">🗑</button>
           <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
           <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
           <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || ''}</p>
@@ -238,19 +238,21 @@ document.getElementById("limparTabela").addEventListener("click", async () => {
 // ---------------- MODAL DE EDIÇÃO ----------------
 const editModal = document.getElementById("editModal");
 const editForm = document.getElementById("editForm");
-const closeBtn = document.querySelector(".close-btn");
-let hinoAtualID = null; // agora usamos o ID real
+const closeBtn = editModal.querySelector(".close-btn"); // garante que pega o botão do modal certo
+let hinoAtualID = null; // ID real do hino
 
 // abrir modal e preencher dados
-async function abrirModalEdicao(index) {
+async function abrirModalEdicao(id) {
   try {
-    const res = await fetch('/api/hino');
-    const hinos = await res.json();
-    const hino = hinos[index];
-    if (!hino) return alert("Hino não encontrado!");
-    
-    hinoAtualID = hino.id || index; // usa ID real se existir
+    const res = await fetch(`/api/hino/${id}`); // busca apenas o hino pelo id
+    if (!res.ok) throw new Error("Não foi possível carregar este hino!");
 
+    const hino = await res.json();
+    if (!hino) return alert("Hino não encontrado!");
+
+    hinoAtualID = hino.id; // guarda ID real
+
+    // Preenche os campos
     editForm.grupo.value = hino.grupo || '';
     editForm.data.value = hino.data || '';
     editForm.nome.value = hino.nome || '';
@@ -258,14 +260,15 @@ async function abrirModalEdicao(index) {
     editForm.tom.value = hino.tom || '';
     editForm.atentem.value = hino.atentem || '';
 
-    editModal.style.display = "block";
+    editModal.style.display = "block"; // abre modal
   } catch (err) {
     console.error(err);
     alert("Erro ao carregar hino para edição!");
   }
 }
 
-closeBtn.onclick = () => editModal.style.display = "none";
+// fechar modal
+closeBtn.onclick = () => (editModal.style.display = "none");
 window.onclick = (event) => {
   if (event.target == editModal) editModal.style.display = "none";
 };
@@ -287,26 +290,25 @@ editForm.addEventListener("submit", async (e) => {
 
   try {
     const res = await fetch(`/api/hino/${hinoAtualID}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dadosAtualizados)
     });
 
     if (res.ok) {
-      alert("Hino atualizado com sucesso!");
+      alert("✅ Hino atualizado com sucesso!");
       editModal.style.display = "none";
-      carregarHinos();
+      carregarHinos(); // recarrega cards
     } else {
       const erro = await res.text();
-      alert("Erro ao atualizar hino! " + erro);
+      alert("❌ Erro ao atualizar hino! " + erro);
     }
   } catch (err) {
     console.error(err);
-    alert("Erro na conexão ao atualizar hino!");
+    alert("❌ Erro na conexão ao atualizar hino!");
   }
 });
-
-
+1
 // ---------------- CALENDÁRIO ----------------
 const monthYear = document.getElementById("monthYear");
 const calendarBody = document.getElementById("calendarBody");
