@@ -128,77 +128,71 @@ async function carregarHinos() {
     hinos.forEach((hino, index) => {
       const dataFormatada = hino.data.includes("-") ? hino.data.split("-").reverse().join("/") : hino.data;
       if (!hinosPorData[dataFormatada]) hinosPorData[dataFormatada] = [];
-      hinosPorData[dataFormatada].push({ ...hino, index });
+      hinosPorData[dataFormatada].push({ ...hino, index }); // usa index do array
     });
 
-    // Renderiza grupos de datas
-    // Renderiza grupos de datas (ordenadas)
-Object.keys(hinosPorData)
-  .sort((a, b) => {
-    // converte "dd/mm/yyyy" para Date p/ ordenar
-    const [da, ma, ya] = a.split("/");
-    const [db, mb, yb] = b.split("/");
-    return new Date(ya, ma - 1, da) - new Date(yb, mb - 1, db);
-  })
-  .forEach(data => {
+    // Renderiza grupos de datas ordenados
+    Object.keys(hinosPorData)
+      .sort((a, b) => {
+        const [da, ma, ya] = a.split("/");
+        const [db, mb, yb] = b.split("/");
+        return new Date(ya, ma - 1, da) - new Date(yb, mb - 1, db);
+      })
+      .forEach(data => {
 
-      // Bloco por data
-      const blocoData = document.createElement("div");
-      blocoData.classList.add("grupo-data");
-      blocoData.setAttribute("data-data", data);
+        const blocoData = document.createElement("div");
+        blocoData.classList.add("grupo-data");
+        blocoData.setAttribute("data-data", data);
 
-      // Título da data
-      const titulo = document.createElement("h2");
-      titulo.classList.add("titulo-data");
-      titulo.textContent = data;
-      blocoData.appendChild(titulo);
+        const titulo = document.createElement("h2");
+        titulo.classList.add("titulo-data");
+        titulo.textContent = data;
+        blocoData.appendChild(titulo);
 
-      // Container de cards
-      const cardsWrapper = document.createElement("div");
-      cardsWrapper.classList.add("cards_wrapper");
-      blocoData.appendChild(cardsWrapper);
+        const cardsWrapper = document.createElement("div");
+        cardsWrapper.classList.add("cards_wrapper");
+        blocoData.appendChild(cardsWrapper);
 
-      // Botões de navegação (individuais para cada data)
-      const nav = document.createElement("div");
-      nav.classList.add("cards_nav");
+        // Botões de navegação
+        const nav = document.createElement("div");
+        nav.classList.add("cards_nav");
 
-      const btnPrev = document.createElement("button");
-      btnPrev.innerHTML = "&#9664;";
-      const btnNext = document.createElement("button");
-      btnNext.innerHTML = "&#9654;";
+        const btnPrev = document.createElement("button");
+        btnPrev.innerHTML = "&#9664;";
+        const btnNext = document.createElement("button");
+        btnNext.innerHTML = "&#9654;";
 
-      btnPrev.addEventListener("click", () => {
-        cardsWrapper.scrollBy({ left: -220, behavior: "smooth" });
+        btnPrev.addEventListener("click", () => {
+          cardsWrapper.scrollBy({ left: -220, behavior: "smooth" });
+        });
+        btnNext.addEventListener("click", () => {
+          cardsWrapper.scrollBy({ left: 220, behavior: "smooth" });
+        });
+
+        nav.appendChild(btnPrev);
+        nav.appendChild(btnNext);
+        blocoData.appendChild(nav);
+
+        // Adiciona os cards usando index do array
+        hinosPorData[data].forEach(hino => {
+          const card = document.createElement("div");
+          card.classList.add("card");
+          card.classList.add(`grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`);
+
+          card.innerHTML = `
+            <button class="edit-btn" onclick="abrirModalEdicao(${hino.index})">✏️</button>
+            <button class="delete-btn" onclick="deletarHino(${hino.index})">🗑</button>
+            <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
+            <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
+            <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || ''}</p>
+            <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
+            <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
+          `;
+          cardsWrapper.appendChild(card);
+        });
+
+        container.appendChild(blocoData);
       });
-      btnNext.addEventListener("click", () => {
-        cardsWrapper.scrollBy({ left: 220, behavior: "smooth" });
-      });
-
-      nav.appendChild(btnPrev);
-      nav.appendChild(btnNext);
-      blocoData.appendChild(nav);
-
-      // Adiciona os cards
-      hinosPorData[data].forEach(hino => {
-        const card = document.createElement("div");
-        card.classList.add("card");
-        card.classList.add(`grupo_${hino.grupo.toLowerCase().replace(/\s/g, "_")}`);
-
-        card.innerHTML = `
-          <button class="edit-btn" onclick="abrirModalEdicao(${hino.id})">✏️</button>
-          <button class="delete-btn" onclick="deletarHino(${hino.id})">🗑</button>
-          <h3 class="Card_grupo">Grupo: ${hino.grupo}</h3>
-          <p class="Card_hino"><strong>Nome do Hino:</strong> ${hino.nome}</p>
-          <p class="Card_tom"><strong>Tom:</strong> ${hino.tom || ''}</p>
-          <p class="Card_atentem"><strong>Atentem-se:</strong> ${hino.atentem || 'Nenhum'}</p>
-          <a href="${hino.link}" class="Card_link" target="_blank">Assistir</a>
-        `;
-        cardsWrapper.appendChild(card);
-      });
-
-      // Adiciona o grupo de data no container principal
-      container.appendChild(blocoData);
-    });
 
   } catch (err) {
     console.error("Erro ao carregar hinos:", err);
@@ -238,21 +232,18 @@ document.getElementById("limparTabela").addEventListener("click", async () => {
 // ---------------- MODAL DE EDIÇÃO ----------------
 const editModal = document.getElementById("editModal");
 const editForm = document.getElementById("editForm");
-const closeBtn = editModal.querySelector(".close-btn"); // garante que pega o botão do modal certo
-let hinoAtualID = null; // ID real do hino
+const closeBtn = editModal.querySelector(".close-btn");
+let hinoAtualID = null; // agora é índice do array
 
-// abrir modal e preencher dados
-async function abrirModalEdicao(id) {
+async function abrirModalEdicao(index) {
   try {
-    const res = await fetch(`/api/hino/${id}`); // busca apenas o hino pelo id
-    if (!res.ok) throw new Error("Não foi possível carregar este hino!");
+    const res = await fetch(`/api/hino/${index}`);
+    if (!res.ok) throw new Error("Não foi possível carregar este hino");
 
     const hino = await res.json();
-    if (!hino) return alert("Hino não encontrado!");
+    hinoAtualID = index; // guarda índice para edição
 
-    hinoAtualID = hino.id; // guarda ID real
-
-    // Preenche os campos
+    // Preenche campos
     editForm.grupo.value = hino.grupo || '';
     editForm.data.value = hino.data || '';
     editForm.nome.value = hino.nome || '';
@@ -260,24 +251,21 @@ async function abrirModalEdicao(id) {
     editForm.tom.value = hino.tom || '';
     editForm.atentem.value = hino.atentem || '';
 
-    editModal.style.display = "block"; // abre modal
+    editModal.style.display = "block";
   } catch (err) {
     console.error(err);
     alert("Erro ao carregar hino para edição!");
   }
 }
 
-// fechar modal
 closeBtn.onclick = () => (editModal.style.display = "none");
 window.onclick = (event) => {
   if (event.target == editModal) editModal.style.display = "none";
 };
 
-// submit do formulário
 editForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  if (!hinoAtualID) return alert("Hino não selecionado!");
+  if (hinoAtualID === null) return alert("Hino não selecionado!");
 
   const dadosAtualizados = {
     grupo: editForm.grupo.value,
@@ -298,7 +286,7 @@ editForm.addEventListener("submit", async (e) => {
     if (res.ok) {
       alert("✅ Hino atualizado com sucesso!");
       editModal.style.display = "none";
-      carregarHinos(); // recarrega cards
+      carregarHinos();
     } else {
       const erro = await res.text();
       alert("❌ Erro ao atualizar hino! " + erro);

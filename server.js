@@ -23,6 +23,26 @@ app.get('/api/hino', (req, res) => {
     }
 });
 
+// API de hinos - GET por índice
+app.get('/api/hino/:index', (req, res) => {
+    const index = parseInt(req.params.index);
+
+    if (isNaN(index)) return res.status(400).json({ message: 'Índice inválido' });
+
+    try {
+        const data = fs.readFileSync(hinosFilePath, 'utf-8');
+        const hinos = JSON.parse(data);
+
+        if (index < 0 || index >= hinos.length) {
+            return res.status(404).json({ message: 'Hino não encontrado' });
+        }
+
+        res.json(hinos[index]); // retorna apenas o hino solicitado
+    } catch {
+        res.status(500).json({ message: 'Erro ao ler hinos' });
+    }
+});
+
 // API de hinos - POST
 app.post('/api/hino', (req, res) => {
     const { grupo, data, nome, link, tom, atentem } = req.body;
