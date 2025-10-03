@@ -70,22 +70,24 @@ body {
 
 /* ================== CARD ================== */
 .card {
-  flex: 0 0 100%;
-  max-width: 100%;
-  min-height: 300px;
+  flex: 0 0 350px;           /* aumenta a largura do card */
+  max-width: 350px;          /* aumenta a largura máxima */
+  min-height: 320px;         /* opcional: aumenta altura */
   border-radius: 10px;
-  padding: 15px;
+  padding: 20px;             /* mais espaço interno */
   color: white;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;   /* centraliza verticalmente */
+  align-items: center;       /* centraliza horizontalmente */
   background-size: cover;
   background-position: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   scroll-snap-align: start;
-  font-size: 0.85rem; /* fonte menor no mobile */
+  font-size: 1.1rem;         /* aumenta o tamanho da fonte */
+  text-align: center;        /* centraliza o texto */
 }
 
 /* ================== BOTÕES NO CARD ================== */
