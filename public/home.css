@@ -95,6 +95,26 @@ body {
   font-size: 1.6rem;         /* aumenta o tamanho das letras */
   text-align: left;          /* alinha cada elemento à esquerda */
 }
+.Card_grupo {
+  font-weight: 600;
+  font-size: 16px;
+  color: #444;
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+.Card_hino strong,
+.Card_tom strong,
+.Card_atentem strong {
+  color: #111;
+}
+
+.Card_hino,
+.Card_tom,
+.Card_atentem {
+  margin: 6px 0;
+  font-size: 15px;
+}
 
 /* ================== BOTÕES NO CARD ================== */
 .card .edit-btn,
@@ -123,6 +143,23 @@ body {
   width: 26px;
   height: 26px;
   font-size: 14px;
+}
+.Card_link {
+  display: inline-block;
+  background: linear-gradient(135deg, #007bff, #0056d6);
+  color: white;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  margin-top: 12px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.Card_link:hover {
+  background: linear-gradient(135deg, #0056d6, #003fa6);
+  transform: scale(1.05);
 }
 /* ================== BOTÕES DE NAVEGAÇÃO ================== */
 .cards_nav {
