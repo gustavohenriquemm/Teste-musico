@@ -86,15 +86,11 @@ body {
   background-position: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   scroll-snap-align: start;
-  font-size: 1.7rem;         /* aumenta o tamanho da fonte */
+  font-size: 1.3rem;         /* aumenta o tamanho da fonte */
   text-align: left;        /* centraliza o texto */
 }
-.card h3,
-.card p,
-.card a {
-  font-size: 1.6rem;         /* aumenta o tamanho das letras */
-  text-align: left;          /* alinha cada elemento à esquerda */
-}
+          /* alinha cada elemento à esquerda */
+
 .Card_grupo {
   font-weight: 600;
   font-size: 16px;
