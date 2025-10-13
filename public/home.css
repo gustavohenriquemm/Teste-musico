@@ -70,9 +70,9 @@ body {
 
 /* ================== CARD ================== */
 .card {
-  flex: 0 0 350px;           /* aumenta a largura do card */
+  flex: 0 0 310px;           /* aumenta a largura do card */
   max-width: 450px;          /* aumenta a largura máxima */
-  min-height: 320px;         /* opcional: aumenta altura */
+  min-height: 350px;         /* opcional: aumenta altura */
   border-radius: 10px;
   padding: 20px;             /* mais espaço interno */
   color: white;
@@ -86,8 +86,8 @@ body {
   background-position: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   scroll-snap-align: start;
-  font-size: 1.1rem;         /* aumenta o tamanho da fonte */
-  text-align: center;        /* centraliza o texto */
+  font-size: 1.7rem;         /* aumenta o tamanho da fonte */
+  text-align: left;        /* centraliza o texto */
 }
 
 /* ================== BOTÕES NO CARD ================== */
