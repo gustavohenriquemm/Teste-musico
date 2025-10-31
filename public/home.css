@@ -57,14 +57,26 @@ body {
 
 .cards_wrapper {
   display: flex;
+  flex-wrap: nowrap;
   gap: 15px;
   overflow-x: auto;
-  padding: 10px 20px; /* mantém espaçamento nas laterais */
+  overflow-y: hidden;
+  padding: 15px;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  scroll-padding-left: 20px; /* 👈 novo: garante que o primeiro card apareça totalmente */
+  scroll-padding: 15px;
+  -webkit-overflow-scrolling: touch; /* rolagem suave em iOS */
+  width: 100%; /* 👈 trava a largura */
+  min-width: 100%; /* 👈 impede de encolher */
+  box-sizing: border-box;
 }
 
+
+.cards_wrapper::before,
+.cards_wrapper::after {
+  content: "";
+  flex: 0 0 5px;
+}
 
 
 .cards_wrapper::-webkit-scrollbar {
@@ -405,12 +417,5 @@ body {
   display: flex;
 }
 
-@media (max-width: 768px) {
-  .cards_wrapper::before,
-  .cards_wrapper::after {
-    content: "";
-    flex: 0 0 10px; /* espaçamento fixo nas pontas */
-  }
-}
 
 
