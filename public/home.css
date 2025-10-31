@@ -59,12 +59,10 @@ body {
   display: flex;
   gap: 15px;
   overflow-x: auto;
-  padding: 10px 20px;
+  padding: 10px 20px; /* mantém espaçamento nas laterais */
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  /* Adicione essas propriedades para corrigir o corte */
-  scroll-padding-left: 20px;  /* Corresponde ao padding esquerdo */
-  scroll-padding-right: 20px; /* Opcional, para consistência no final */
+  scroll-padding-left: 20px; /* 👈 novo: garante que o primeiro card apareça totalmente */
 }
 
 
@@ -406,4 +404,13 @@ body {
 #welcomeModal.show {
   display: flex;
 }
+
+@media (max-width: 768px) {
+  .cards_wrapper::before,
+  .cards_wrapper::after {
+    content: "";
+    flex: 0 0 10px; /* espaçamento fixo nas pontas */
+  }
+}
+
 
