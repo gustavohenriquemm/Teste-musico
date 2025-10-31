@@ -75,23 +75,44 @@ body {
   flex: 0 0 310px;
   max-width: 450px;
   min-height: 350px;
-  border-radius: 10px;
+  border-radius: 16px;
   padding: 20px;
   color: white;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-start;
   background-size: cover;
   background-position: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-blend-mode: overlay;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   scroll-snap-align: start;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   text-align: left;
-  margin-left: 5px;  /* <<< opcional, dá um respiro do canto */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
+  z-index: 0;
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+
           /* alinha cada elemento à esquerda */
 
 .Card_grupo {
