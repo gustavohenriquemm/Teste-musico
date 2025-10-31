@@ -38,10 +38,9 @@ body {
 /* Cada bloco de data é independente */
 .grupo-data {
   width: 100%;
-  margin: 40px 0;          /* separação entre datas */
-  display: block;          /* força a quebrar linha */
+  margin: 40px 0;
+  display: block;
 }
-
 
 /* O título da data em cima */
 .titulo-data {
@@ -52,9 +51,6 @@ body {
 }
 
 /* ================== CARDS HORIZONTAIS ================== */
-
-
-
 .cards_wrapper {
   display: flex;
   flex-wrap: nowrap;
@@ -64,20 +60,18 @@ body {
   padding: 15px;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  scroll-padding: 15px;
-  -webkit-overflow-scrolling: touch; /* rolagem suave em iOS */
-  width: 100%; /* 👈 trava a largura */
-  min-width: 100%; /* 👈 impede de encolher */
+  scroll-padding: 10px;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
   box-sizing: border-box;
+  justify-content: flex-start;
 }
-
 
 .cards_wrapper::before,
 .cards_wrapper::after {
   content: "";
-  flex: 0 0 5px;
+  flex: 0 0 8px;
 }
-
 
 .cards_wrapper::-webkit-scrollbar {
   height: 4px;
@@ -89,38 +83,44 @@ body {
 
 /* ================== CARD ================== */
 .card {
-  flex: 0 0 310px;
-  max-width: 450px;
-  min-height: 350px;
+  flex: 0 0 85%;
+  max-width: 85%;
+  min-width: 85%;
+  min-height: 340px;
   border-radius: 16px;
   padding: 20px;
   color: white;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* título em cima, botão embaixo */
+  justify-content: space-between;
   align-items: stretch;
   background-size: cover;
   background-position: center;
   background-blend-mode: overlay;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
   font-size: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.9);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.card:active {
+  transform: scale(0.98);
 }
 
 .card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
 }
+
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.8));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.85));
   z-index: 0;
 }
 
@@ -129,14 +129,18 @@ body {
   z-index: 1;
 }
 
-
-
-          /* alinha cada elemento à esquerda */
+/* ======== CONTEÚDO DO CARD ======== */
+.Card_grupo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 5px;
+}
 
 .Card_hino {
   font-weight: 600;
   font-size: 16px;
-  color: #444;
+  color: #ddd;
   margin-top: 10px;
   margin-bottom: 8px;
 }
@@ -147,23 +151,12 @@ body {
   color: #fff;
 }
 
-
-.Card_grupo {
-  font-size: 1.4rem; /* maior e mais visível */
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 5px;
-}
-
-/* Linhas de informação */
-.Card_hino,
 .Card_tom,
 .Card_atentem {
   font-size: 1rem;
   color: #ddd;
 }
 
-/* ======== CONTEÚDO ======== */
 .card-content {
   display: flex;
   flex-direction: column;
@@ -187,8 +180,8 @@ body {
   left: 8px;
   background-color: #3948cf;
   color: #fff;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   font-size: 14px;
 }
 
@@ -200,6 +193,7 @@ body {
   height: 26px;
   font-size: 14px;
 }
+
 .Card_link {
   align-self: center;
   background: linear-gradient(135deg, #007bff, #0056d6);
@@ -240,7 +234,6 @@ body {
   background: rgba(72, 61, 139, 0.9);
 }
 
-
 /* ================== GRUPOS ================== */
 .grupo_mocidade {
   background: url("/img/IMG mocidade.png") no-repeat center/cover;
@@ -275,7 +268,7 @@ body {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  background: rgba(42,25,194,0.28);
+  background: rgba(42, 25, 194, 0.28);
   border-radius: 10px;
   color: white;
   padding-bottom: 15px;
@@ -286,7 +279,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(42,25,194,0.5);
+  background: rgba(42, 25, 194, 0.5);
   padding: 15px;
 }
 
@@ -299,7 +292,8 @@ body {
   border-collapse: collapse;
   table-layout: fixed;
 }
-.calendar th, .calendar td {
+.calendar th,
+.calendar td {
   text-align: center;
   padding: 5px;
   word-wrap: break-word;
@@ -307,17 +301,17 @@ body {
 }
 .calendar th {
   font-size: 1rem;
-  background: rgba(42,25,194,0.5);
+  background: rgba(42, 25, 194, 0.5);
 }
 .calendar td {
   font-size: 0.85em;
   cursor: pointer;
 }
 .calendar td:hover {
-  background: rgba(209,231,221,0.5);
+  background: rgba(209, 231, 221, 0.5);
 }
 .today {
-  background: rgba(26,9,255,0.67);
+  background: rgba(26, 9, 255, 0.67);
   border-radius: 50%;
 }
 
@@ -337,7 +331,7 @@ body {
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 #limparTabela:hover {
   transform: translateY(-3px);
@@ -353,7 +347,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 .modal-content {
   background-color: #fff;
@@ -391,7 +385,8 @@ body {
   cursor: pointer;
   font-size: 16px;
 }
-/* Popup de boas-vindas */
+
+/* ================== POPUP DE BOAS-VINDAS ================== */
 .popup-welcome {
   width: 80%;
   max-width: 400px;
@@ -401,14 +396,14 @@ body {
 }
 
 #welcomeModal {
-  display: none; /* inicial oculto */
+  display: none;
   position: fixed;
   z-index: 9999;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
 }
@@ -416,6 +411,3 @@ body {
 #welcomeModal.show {
   display: flex;
 }
-
-
-
