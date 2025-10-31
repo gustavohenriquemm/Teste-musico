@@ -267,6 +267,7 @@ body {
   margin-top: 20px;
 }
 #limparTabela {
+  display: none;
   background: linear-gradient(135deg, #6a5acd, #483d8b);
   color: white;
   font-size: 16px;
