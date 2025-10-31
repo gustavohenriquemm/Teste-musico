@@ -55,10 +55,12 @@ body {
 .cards_wrapper {
   display: flex;
   gap: 15px;
-  overflow-x: auto;       /* scroll horizontal dentro da data */
-  padding: 10px;
+  overflow-x: auto;
+  padding: 10px 20px; /* <<< adiciona espaçamento nas laterais */
   scroll-behavior: smooth;
+  scroll-snap-type: x mandatory; /* ajuda no alinhamento */
 }
+
 
 .cards_wrapper::-webkit-scrollbar {
   height: 4px;
@@ -70,24 +72,25 @@ body {
 
 /* ================== CARD ================== */
 .card {
-  flex: 0 0 310px;           /* aumenta a largura do card */
-  max-width: 450px;          /* aumenta a largura máxima */
-  min-height: 350px;         /* opcional: aumenta altura */
+  flex: 0 0 310px;
+  max-width: 450px;
+  min-height: 350px;
   border-radius: 10px;
-  padding: 20px;             /* mais espaço interno */
+  padding: 20px;
   color: white;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* centraliza verticalmente */
-  align-items: center;       /* centraliza horizontalmente */
+  justify-content: center;
+  align-items: center;
   background-size: cover;
   background-position: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   scroll-snap-align: start;
-  font-size: 1.3rem;         /* aumenta o tamanho da fonte */
-  text-align: left;        /* centraliza o texto */
+  font-size: 1.3rem;
+  text-align: left;
+  margin-left: 5px;  /* <<< opcional, dá um respiro do canto */
 }
           /* alinha cada elemento à esquerda */
 
