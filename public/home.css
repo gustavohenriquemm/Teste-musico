@@ -81,18 +81,19 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
+  justify-content: space-between; /* título em cima, botão embaixo */
+  align-items: stretch;
   background-size: cover;
   background-position: center;
   background-blend-mode: overlay;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   scroll-snap-align: start;
-  font-size: 1.2rem;
-  text-align: left;
+  font-size: 1rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.9);
 }
+
 .card:hover {
   transform: translateY(-6px) scale(1.02);
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
@@ -102,7 +103,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.8));
   z-index: 0;
 }
 
@@ -123,17 +124,35 @@ body {
   margin-bottom: 8px;
 }
 
-.Card_hino strong,
+.Card_grupo strong,
 .Card_tom strong,
 .Card_atentem strong {
-  color: #111;
+  color: #fff;
 }
 
-.Card_hino,
+
+.Card_hino {
+  font-size: 1.4rem; /* maior e mais visível */
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+/* Linhas de informação */
+.Card_grupo,
 .Card_tom,
 .Card_atentem {
-  margin: 6px 0;
-  font-size: 15px;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+/* ======== CONTEÚDO ======== */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+  text-align: left;
 }
 
 /* ================== BOTÕES NO CARD ================== */
@@ -165,15 +184,15 @@ body {
   font-size: 14px;
 }
 .Card_link {
-  display: inline-block;
+  align-self: center;
   background: linear-gradient(135deg, #007bff, #0056d6);
   color: white;
   text-decoration: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 14px;
-  margin-top: 12px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 10px;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
@@ -181,6 +200,7 @@ body {
   background: linear-gradient(135deg, #0056d6, #003fa6);
   transform: scale(1.05);
 }
+
 /* ================== BOTÕES DE NAVEGAÇÃO ================== */
 .cards_nav {
   display: flex;
