@@ -62,13 +62,16 @@ body {
   overflow-x: auto;
   overflow-y: hidden;
   padding: 10px;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 10px;
-  -webkit-overflow-scrolling: touch;
   width: 100%;
   box-sizing: border-box;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
   justify-content: flex-start;
+
+  /* 👇 ESSENCIAL pra impedir os cards de se moverem sozinhos */
+  align-items: flex-start;
+  scroll-snap-stop: always;
 }
 
 
@@ -90,8 +93,8 @@ body {
 /* ================== CARD ================== */
 .card {
   flex: 0 0 85%; /* 👈 cada card ocupa 85% da largura da tela (fixo no mobile) */
-  max-width: 400px; /* 👈 nunca passa disso */
-  min-width: 280px; /* 👈 nunca fica menor que isso */
+  max-width: 450px; /* 👈 nunca passa disso */
+  min-width: 350px; /* 👈 nunca fica menor que isso */
   border-radius: 16px;
   padding: 20px;
   color: white;
@@ -103,10 +106,12 @@ body {
   background-position: center;
   background-blend-mode: overlay;
   overflow: hidden;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   text-shadow: 1px 1px 2px rgba(0,0,0,0.9);
+  flex-shrink: 0; /* impede o encolhimento dos cards */
+  flex-grow: 0;   
 }
 
 .card:active {
