@@ -8,45 +8,47 @@
   <link rel="apple-touch-icon" href="img/pql.png">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#6a1b9a">
+
+ 
 </head>
 <body>
   <section class="central">
 
-    <!-- Link para o formulário -->
-    <a class="Pagina001" href="Formulario.html">Página 2</a>
+    <!-- ======== CALENDÁRIO (AGORA NO TOPO) ======== -->
+    <div class="calendar">
+      <header>
+        <button id="prev">&#9664;</button>
+        <h2 id="monthYear"></h2>
+        <button id="next">&#9654;</button>
+      </header>
+      <table>
+        <thead>
+          <tr>
+            <th>Dom</th>
+            <th>Seg</th>
+            <th>Ter</th>
+            <th>Qua</th>
+            <th>Qui</th>
+            <th>Sex</th>
+            <th>Sáb</th>
+          </tr>
+        </thead>
+        <tbody id="calendarBody"></tbody>
+      </table>
+    </div>
 
     <!-- POPUP DE BOAS-VINDAS -->
-      <div id="welcomeModal" class="modal">
-        <div class="modal-content popup-welcome">
-          <h2>Olá!</h2>
-          <p>Deseja ver os hinos do congresso da cidade?</p>
-          <button id="verHinosBtn">Sim, quero ver!</button>
-          <button id="fecharPopupBtn">Não, obrigado</button>
-        </div>
+    <div id="welcomeModal" class="modal">
+      <div class="modal-content popup-welcome">
+        <h2>Olá!</h2>
+        <p>Deseja ver os hinos do congresso da cidade?</p>
+        <button id="verHinosBtn">Sim, quero ver!</button>
+        <button id="fecharPopupBtn">Não, obrigado</button>
       </div>
+    </div>
 
-    <!-- Calendário -->
-    <div class="calendar">
-        <header>
-          <button id="prev">&#9664;</button>
-          <h2 id="monthYear"></h2>
-          <button id="next">&#9654;</button>
-        </header>
-        <table>
-          <thead>
-            <tr>
-              <th>Dom</th>
-              <th>Seg</th>
-              <th>Ter</th>
-              <th>Qua</th>
-              <th>Qui</th>
-              <th>Sex</th>
-              <th>Sáb</th>
-            </tr>
-          </thead>
-          <tbody id="calendarBody"></tbody>
-        </table>
-      </div>
+    <!-- Link para o formulário -->
+    <a class="Pagina001" href="Formulario.html">Página 2</a>
 
     <!-- Carrossel de hinos -->
     <div class="carousel-container">
@@ -90,48 +92,91 @@
   </section>
 
 <script>
-  // POPUP DE BOAS-VINDAS
-const welcomeModal = document.getElementById("welcomeModal");
-const verHinosBtn = document.getElementById("verHinosBtn");
-const fecharPopupBtn = document.getElementById("fecharPopupBtn");
+  // ======== POPUP DE BOAS-VINDAS ========
+  const welcomeModal = document.getElementById("welcomeModal");
+  const verHinosBtn = document.getElementById("verHinosBtn");
+  const fecharPopupBtn = document.getElementById("fecharPopupBtn");
 
-// Mostrar popup apenas na primeira visita
-if (!localStorage.getItem("popupShown")) {
-  welcomeModal.classList.add("show");
-}
+  if (!localStorage.getItem("popupShown")) {
+    welcomeModal.classList.add("show");
+  }
 
-// Botão "Sim"
-verHinosBtn.addEventListener("click", () => {
-  localStorage.setItem("popupShown", "true");
-  window.location.href = "public/hinos_congresso.html"; // agora aponta para a pasta correta
+  verHinosBtn.addEventListener("click", () => {
+    localStorage.setItem("popupShown", "true");
+    window.location.href = "public/hinos_congresso.html";
+  });
 
-});
+  fecharPopupBtn.addEventListener("click", () => {
+    localStorage.setItem("popupShown", "true");
+    welcomeModal.classList.remove("show");
+  });
 
-// Botão "Não"
-fecharPopupBtn.addEventListener("click", () => {
-  localStorage.setItem("popupShown", "true");
-  welcomeModal.classList.remove("show");
-});
+  // ======== CALENDÁRIO ========
+  const monthYear = document.getElementById("monthYear");
+  const calendarBody = document.getElementById("calendarBody");
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+  let currentDate = new Date();
 
-let hinoAtualIndex = null;
+  function renderCalendar(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const months = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+    monthYear.textContent = `${months[month]} ${year}`;
 
-// ---------------- CARDS DE HINOS ----------------
-async function carregarHinos() {
-  try {
+    const firstDay = new Date(year, month, 1).getDay();
+    const lastDate = new Date(year, month + 1, 0).getDate();
+
+    calendarBody.innerHTML = "";
+    let row = document.createElement("tr");
+
+    for(let i = 0; i < firstDay; i++) row.appendChild(document.createElement("td"));
+
+    for(let day = 1; day <= lastDate; day++){
+      const cell = document.createElement("td");
+      cell.textContent = day;
+
+      const today = new Date();
+      if(day === today.getDate() && month === today.getMonth() && year === today.getFullYear()){
+        cell.classList.add("today");
+      }
+
+      row.appendChild(cell);
+
+      if((firstDay + day) % 7 === 0){
+        calendarBody.appendChild(row);
+        row = document.createElement("tr");
+      }
+    }
+
+    if(row.children.length > 0) calendarBody.appendChild(row);
+  }
+
+  prevBtn.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar(currentDate);
+  });
+  nextBtn.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar(currentDate);
+  });
+
+  renderCalendar(currentDate);
+
+  // ======== FUNÇÕES DE HINOS ========
+  async function carregarHinos() {
     const res = await fetch('/api/hino');
     const hinos = await res.json();
     const container = document.getElementById("cardsHinos");
     container.innerHTML = "";
 
-    // Agrupa os hinos por data
     const hinosPorData = {};
     hinos.forEach((hino, index) => {
       const dataFormatada = hino.data.includes("-") ? hino.data.split("-").reverse().join("/") : hino.data;
       if (!hinosPorData[dataFormatada]) hinosPorData[dataFormatada] = [];
-      hinosPorData[dataFormatada].push({ ...hino, index }); // usa index do array
+      hinosPorData[dataFormatada].push({ ...hino, index });
     });
 
-    // Renderiza grupos de datas ordenados
     Object.keys(hinosPorData)
       .sort((a, b) => {
         const [da, ma, ya] = a.split("/");
@@ -139,7 +184,6 @@ async function carregarHinos() {
         return new Date(ya, ma - 1, da) - new Date(yb, mb - 1, db);
       })
       .forEach(data => {
-
         const blocoData = document.createElement("div");
         blocoData.classList.add("grupo-data");
         blocoData.setAttribute("data-data", data);
@@ -153,7 +197,6 @@ async function carregarHinos() {
         cardsWrapper.classList.add("cards_wrapper");
         blocoData.appendChild(cardsWrapper);
 
-        // Botões de navegação
         const nav = document.createElement("div");
         nav.classList.add("cards_nav");
 
@@ -173,7 +216,6 @@ async function carregarHinos() {
         nav.appendChild(btnNext);
         blocoData.appendChild(nav);
 
-        // Adiciona os cards usando index do array
         hinosPorData[data].forEach(hino => {
           const card = document.createElement("div");
           card.classList.add("card");
@@ -193,57 +235,31 @@ async function carregarHinos() {
 
         container.appendChild(blocoData);
       });
-
-  } catch (err) {
-    console.error("Erro ao carregar hinos:", err);
   }
-}
 
-
-// ---------------- DELETAR ----------------
-async function deletarHino(index) {
-  if (!confirm("Deseja realmente excluir este hino?")) return;
-  try {
-    const res = await fetch(`/api/hino/${index}`, { method: 'DELETE' });
-    if (res.ok) {
-      alert("✅ Hino removido!");
-      carregarHinos();
-    } else {
-      alert("❌ Erro ao remover hino!");
-    }
-  } catch (err) {
-    console.error(err);
-    alert("❌ Erro na conexão ao remover hino!");
-  }
-}
-
-// ---------------- LIMPAR ----------------
-document.getElementById("limparTabela").addEventListener("click", async () => {
-  try {
-    await fetch('/api/hino', { method: 'DELETE' });
+  async function deletarHino(index) {
+    if (!confirm("Deseja realmente excluir este hino?")) return;
+    await fetch(`/api/hino/${index}`, { method: 'DELETE' });
+    alert("✅ Hino removido!");
     carregarHinos();
-    alert("Cards de hinos limpos com sucesso!");
-  } catch (err) {
-    console.error(err);
-    alert("Erro ao limpar cards!");
   }
-});
 
-// ---------------- MODAL DE EDIÇÃO ----------------
-const editModal = document.getElementById("editModal");
-const editForm = document.getElementById("editForm");
-const closeBtn = editModal.querySelector(".close-btn");
-let hinoAtualID = null; // agora é índice do array
+  document.getElementById("limparTabela").addEventListener("click", async () => {
+    await fetch('/api/hino', { method: 'DELETE' });
+    alert("Cards de hinos limpos com sucesso!");
+    carregarHinos();
+  });
 
-async function abrirModalEdicao(index) {
-  try {
+  const editModal = document.getElementById("editModal");
+  const editForm = document.getElementById("editForm");
+  const closeBtn = editModal.querySelector(".close-btn");
+  let hinoAtualID = null;
+
+  async function abrirModalEdicao(index) {
     const res = await fetch(`/api/hino/${index}`);
-    if (!res.ok) throw new Error("Não foi possível carregar este hino");
-
     const hino = await res.json();
-    hinoAtualID = index; // guarda índice para edição
+    hinoAtualID = index;
 
-    // Preenche campos
     editForm.grupo.value = hino.grupo || '';
     editForm.data.value = hino.data || '';
     editForm.nome.value = hino.nome || '';
@@ -251,32 +267,27 @@ async function abrirModalEdicao(index) {
     editForm.tom.value = hino.tom || '';
     editForm.atentem.value = hino.atentem || '';
 
-    editModal.style.display = "block";
-  } catch (err) {
-    console.error(err);
-    alert("Erro ao carregar hino para edição!");
+    editModal.style.display = "flex";
   }
-}
 
-closeBtn.onclick = () => (editModal.style.display = "none");
-window.onclick = (event) => {
-  if (event.target == editModal) editModal.style.display = "none";
-};
-
-editForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  if (hinoAtualID === null) return alert("Hino não selecionado!");
-
-  const dadosAtualizados = {
-    grupo: editForm.grupo.value,
-    data: editForm.data.value,
-    nome: editForm.nome.value,
-    link: editForm.link.value,
-    tom: editForm.tom.value,
-    atentem: editForm.atentem.value
+  closeBtn.onclick = () => (editModal.style.display = "none");
+  window.onclick = (event) => {
+    if (event.target == editModal) editModal.style.display = "none";
   };
 
-  try {
+  editForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (hinoAtualID === null) return alert("Hino não selecionado!");
+
+    const dadosAtualizados = {
+      grupo: editForm.grupo.value,
+      data: editForm.data.value,
+      nome: editForm.nome.value,
+      link: editForm.link.value,
+      tom: editForm.tom.value,
+      atentem: editForm.atentem.value
+    };
+
     const res = await fetch(`/api/hino/${hinoAtualID}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -288,67 +299,11 @@ editForm.addEventListener("submit", async (e) => {
       editModal.style.display = "none";
       carregarHinos();
     } else {
-      const erro = await res.text();
-      alert("❌ Erro ao atualizar hino! " + erro);
+      alert("❌ Erro ao atualizar hino!");
     }
-  } catch (err) {
-    console.error(err);
-    alert("❌ Erro na conexão ao atualizar hino!");
-  }
-});
-1
-// ---------------- CALENDÁRIO ----------------
-const monthYear = document.getElementById("monthYear");
-const calendarBody = document.getElementById("calendarBody");
-const prevBtn = document.getElementById("prev");
-const nextBtn = document.getElementById("next");
-let currentDate = new Date();
+  });
 
-function renderCalendar(date) {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const months = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-  monthYear.textContent = `${months[month]} ${year}`;
-
-  const firstDay = new Date(year, month, 1).getDay();
-  const lastDate = new Date(year, month + 1, 0).getDate();
-
-  calendarBody.innerHTML = "";
-  let row = document.createElement("tr");
-
-  for(let i = 0; i < firstDay; i++) row.appendChild(document.createElement("td"));
-
-  for(let day = 1; day <= lastDate; day++){
-    const cell = document.createElement("td");
-    cell.textContent = day;
-
-    const today = new Date();
-    if(day === today.getDate() && month === today.getMonth() && year === today.getFullYear()){
-      cell.classList.add("today");
-    }
-
-    row.appendChild(cell);
-
-    if((firstDay + day) % 7 === 0){
-      calendarBody.appendChild(row);
-      row = document.createElement("tr");
-    }
-  }
-
-  if(row.children.length > 0) calendarBody.appendChild(row);
-}
-
-prevBtn.addEventListener("click", () => {
-  currentDate.setMonth(currentDate.getMonth() - 1);
-  renderCalendar(currentDate);
-});
-nextBtn.addEventListener("click", () => {
-  currentDate.setMonth(currentDate.getMonth() + 1);
-  renderCalendar(currentDate);
-});
-
-renderCalendar(currentDate);
-carregarHinos();
+  carregarHinos();
 </script>
 </body>
 </html>
