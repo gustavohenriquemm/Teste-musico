@@ -33,7 +33,7 @@ body {
   margin: 0 auto;
   background: rgba(42,25,194,0.28);
   border-radius: 10px;
-  color: white;
+  color: rgb(255, 255, 255);
   padding-bottom: 15px;
   overflow-x: auto;
 }
@@ -44,24 +44,29 @@ body {
   align-items: center;
   background: rgba(42,25,194,0.5);
   padding: 15px;
+  color: wheat;
 }
 
 .calendar header h2 {
   font-size: 1.3em;
+  color: #fff;
 }
 
 .calendar table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  
 }
 .calendar th, .calendar td {
   text-align: center;
   padding: 5px;
+  color: #fff;
 }
 .calendar th {
   font-size: 1rem;
   background: rgba(42,25,194,0.5);
+  
 }
 .calendar td {
   font-size: 0.85em;
@@ -71,7 +76,7 @@ body {
   background: rgba(209,231,221,0.5);
 }
 .today {
-  background: rgba(26,9,255,0.67);
+  background: rgba(238, 238, 240, 0.67);
   border-radius: 50%;
 }
 
@@ -115,7 +120,7 @@ body {
   height: 4px;
 }
 .cards_wrapper::-webkit-scrollbar-thumb {
-  background: rgba(106, 27, 154, 0.7);
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 4px;
 }
 
