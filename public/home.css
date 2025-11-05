@@ -115,7 +115,7 @@ body {
   height: 4px;
 }
 .cards_wrapper::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(106, 27, 154, 0.7);
   border-radius: 4px;
 }
 
