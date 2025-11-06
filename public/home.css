@@ -26,6 +26,88 @@ body {
   display: none;
 }
 
+/* ========== TABELA DE HINOS ========== */
+.tabela-container {
+  width: 90%;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  overflow-x: auto;
+}
+
+#tabelaHinos {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+#tabelaHinos th, #tabelaHinos td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+#tabelaHinos th {
+  background: #6a1b9a;
+  color: #fff;
+}
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* ========== MODAL ========== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  text-align: left;
+}
+.close-btn {
+  float: right;
+  font-size: 22px;
+  cursor: pointer;
+}
+.linkCard {
+  display: inline-block;
+  background: #6a1b9a;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+/* ========== BOTÃO LIMPAR ========== */
+.container-botao {
+  text-align: center;
+  margin: 20px;
+}
+.container-botao button {
+  background: #6a1b9a;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.container-botao button:hover {
+  background: #4a0072;
+}
+
 /* ================== CALENDÁRIO ================== */
 .calendar {
   width: 100%;
@@ -79,6 +161,7 @@ body {
   background: rgba(238, 238, 240, 0.67);
   border-radius: 50%;
 }
+
 
 /* ================== DATAS E CARDS ================== */
 .datas_container {
